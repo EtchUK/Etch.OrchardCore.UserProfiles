@@ -12,7 +12,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="OrchardCore.ContentManagement" Version="1.0.0-beta3-71077" />
+    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.0.0-beta3-71077" />
     <PackageReference Include="OrchardCore.DisplayManagement" Version="1.0.0-beta3-71077" />
     <PackageReference Include="OrchardCore.ResourceManagement" Version="1.0.0-beta3-71077" />
     <PackageReference Include="OrchardCore.Module.Targets" Version="1.0.0-beta3-71077" />
@@ -20,6 +22,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="OrchardCore.Users" Version="1.0.0-beta3-71077" />
+    <PackageReference Include="OrchardCore.Users.Abstractions" Version="1.0.0-beta3-71077" />
   </ItemGroup>
 
 </Project>

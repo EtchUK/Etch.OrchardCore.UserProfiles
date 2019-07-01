@@ -1,0 +1,67 @@
+﻿using Etch.OrchardCore.UserProfiles.Services;
+using OrchardCore.ContentManagement.Metadata;
+using OrchardCore.ContentManagement.Metadata.Settings;
+using OrchardCore.Data.Migration;
+using OrchardCore.Users.Indexes;
+using OrchardCore.Users.Models;
+using System.Threading.Tasks;
+using YesSql;
+
+namespace Etch.OrchardCore.UserProfiles
+{
+    public class Migrations : DataMigration
+    {
+        #region Dependencies
+
+        private readonly IContentDefinitionManager _contentDefinitionManager;
+        private readonly IProfileService _profileService;
+        private readonly ISession _session;
+
+        #endregion
+
+        #region Constructor
+
+        public Migrations(IContentDefinitionManager contentDefinitionManager, IProfileService profileService, ISession session)
+        {
+            _contentDefinitionManager = contentDefinitionManager;
+            _profileService = profileService;
+            _session = session;
+        }
+
+        #endregion
+
+        #region Migrations
+
+        public async Task<int> CreateAsync()
+        {
+            _contentDefinitionManager.AlterPartDefinition("ProfilePart", builder => builder
+                .WithDescription("Links content item to user.")
+                .WithDefaultPosition("0")
+            );
+
+            _contentDefinitionManager.AlterTypeDefinition(Constants.ContentTypeName, type => type
+                .WithPart("ProfilePart")
+            );
+
+            await CreateProfilesForExistingUsersAsync();
+
+            return 1;
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private async Task CreateProfilesForExistingUsersAsync()
+        {
+            var users = await _session.Query<User, UserIndex>().ListAsync();
+
+            foreach (var user in users)
+            {
+                await _profileService.CreateProfileAsync(user);
+            }
+        }
+
+        #endregion
+    }
+}

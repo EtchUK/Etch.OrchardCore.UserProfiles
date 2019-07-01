@@ -1,0 +1,9 @@
+﻿@using Etch.OrchardCore.UserProfiles.ViewModels;
+@model ProfilePartViewModel
+
+<fieldset class="form-group" asp-validation-class-for="UserName">
+    <label asp-for="UserName">@T["Username"]</label>
+    <input asp-for="UserName" class="form-control content-preview-text content-caption-text" autofocus="autofocus" readonly />
+    <span asp-validation-for="UserName"></span>
+    <span class="hint">@T["Username of linked user."]</span>
+</fieldset>
