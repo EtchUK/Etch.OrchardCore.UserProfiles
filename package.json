@@ -1,0 +1,15 @@
+{
+    "name": "etch.orchardcore.userprofiles",
+    "version": "1.0.0",
+    "description": "Module for Orchard Core that provides profiles for users.",
+    "scripts": {
+        "build": "webpack",
+        "develop": "webpack --watch",
+        "start": "npm install && npm run develop"
+    },
+    "author": "Etch UK",
+    "devDependencies": {
+        "webpack": "^4.29.6",
+        "webpack-cli": "^3.2.3"
+    }
+}

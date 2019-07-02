@@ -9,6 +9,7 @@ using OrchardCore.Modules;
 
 namespace Etch.OrchardCore.UserProfiles
 {
+    [Feature(Constants.Features.Core)]
     public class Startup : StartupBase
     {
         public override void ConfigureServices(IServiceCollection services)

@@ -3,8 +3,6 @@ using Etch.OrchardCore.UserProfiles.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
-using OrchardCore.DisplayManagement.Handlers;
-using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Users;
 using OrchardCore.Users.Services;
@@ -59,7 +57,7 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
 
             if (!await context.Updater.TryUpdateModelAsync(model, Prefix))
             {
-                return Edit(part);
+                return await EditAsync(part, context);
             }
 
             var user = await _userService.GetUserAsync(model.UserName);
