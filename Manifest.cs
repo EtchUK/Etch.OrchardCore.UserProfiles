@@ -6,7 +6,7 @@ using OrchardCore.Modules.Manifest;
     Category = "Users",
     Description = "Adds profiles for users",
     Name = "User Profiles",
-    Version = "0.0.1",
+    Version = "0.1.0",
     Website = "https://etchuk.com"
 )]
 
