@@ -4,6 +4,7 @@ using Etch.OrchardCore.UserProfiles.Grouping.ViewModels;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
+using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.DisplayManagement.Views;
 using System;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Drivers
     {
         #region Dependencies
 
+        private readonly IContentDefinitionManager _contentDefinitionManager;
         private readonly IContentManager _contentManager;
         private readonly ISession _session;
 
@@ -23,8 +25,9 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Drivers
 
         #region Constructor
 
-        public ProfileGroupPartDisplay(IContentManager contentManager, ISession session)
+        public ProfileGroupPartDisplay(IContentDefinitionManager contentDefinitionManager, IContentManager contentManager, ISession session)
         {
+            _contentDefinitionManager = contentDefinitionManager;
             _contentManager = contentManager;
             _session = session;
         }
@@ -43,6 +46,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Drivers
             {
                 model.Items = query.OrderBy(x => x.DisplayText);
                 model.PartDefinition = context.TypePartDefinition;
+                model.Settings = GetSettings(part);
             });
         }
 
@@ -106,6 +110,13 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Drivers
 
             await _contentManager.UpdateAsync(profile);
             await _contentManager.PublishAsync(profile);
+        }
+
+        private ProfileGroupPartSettings GetSettings(ProfileGroupPart part)
+        {
+            var contentTypeDefinition = _contentDefinitionManager.GetTypeDefinition(part.ContentItem.ContentType);
+            var contentTypePartDefinition = contentTypeDefinition.Parts.FirstOrDefault(x => string.Equals(x.PartDefinition.Name, nameof(ProfileGroupPart), StringComparison.Ordinal));
+            return contentTypePartDefinition.Settings.ToObject<ProfileGroupPartSettings>();
         }
 
         #endregion

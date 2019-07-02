@@ -1,4 +1,6 @@
-﻿using OrchardCore.ContentFields.ViewModels;
+﻿using Etch.OrchardCore.UserProfiles.Grouping.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using OrchardCore.ContentFields.ViewModels;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Metadata.Models;
 using System.Collections.Generic;
@@ -30,5 +32,8 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.ViewModels
                 }).ToList();
             }
         }
+
+        [BindNever]
+        public ProfileGroupPartSettings Settings { get; set; }
     }
 }

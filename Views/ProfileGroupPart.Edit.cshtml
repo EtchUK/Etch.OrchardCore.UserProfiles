@@ -11,6 +11,9 @@
     var partName = Model.PartDefinition.Name;
     var tenantPath = string.IsNullOrEmpty(ShellSettings.RequestUrlPrefix) ? string.Empty : "/" + ShellSettings.RequestUrlPrefix;
     var vueElementId = $"ContentPicker_{partName}_{Guid.NewGuid().ToString("n")}";
+
+    var label = Model.Settings.Label ?? "Profiles";
+    var hint = Model.Settings.Hint;
 }
 
 <script asp-src="~/Etch.OrchardCore.UserProfiles/Scripts/grouping/profilePicker.js" asp-name="profilePicker" at="Foot" depends-on="vuejs, vuemultiselect"></script>
@@ -22,7 +25,12 @@
 <script asp-src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.14.1/vuedraggable.min.js" debug-src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.14.1/vuedraggable.js" asp-name="vuedraggable" depends-on="vuejs, sortable" at="Foot"></script>
 
 <h5>
-    Profiles <span class="hint">— Collection of users associated to content item.</span>
+    @label 
+    
+    @if (!string.IsNullOrWhiteSpace(hint))
+    {
+        <span class="hint">— @hint</span>
+    }
 </h5>
 
 <div id="@vueElementId" class="content-picker-default" data-part="@partName">

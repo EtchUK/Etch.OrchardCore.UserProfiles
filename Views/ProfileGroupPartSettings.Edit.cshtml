@@ -1,0 +1,15 @@
+﻿@model Etch.OrchardCore.UserProfiles.Grouping.ViewModels.ProfileGroupPartSettingsViewModel
+
+<fieldset class="form-group" asp-validation-class-for="Label">
+    <label asp-for="Label">@T["Label"]</label>
+    <input asp-for="Label" class="form-control" />
+    <span asp-validation-for="Label"></span>
+    <span class="hint">@T["Displayed as field label when above profiles when editing content item."]</span>
+</fieldset>
+
+<fieldset class="form-group" asp-validation-class-for="Hint">
+    <label asp-for="Hint">@T["Hint"]</label>
+    <textarea asp-for="Hint" rows="3" class="form-control"></textarea>
+    <span asp-validation-for="Hint"></span>
+    <span class="hint">@T["Displayed alongside label."]</span>
+</fieldset>

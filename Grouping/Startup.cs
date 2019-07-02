@@ -2,11 +2,13 @@
 using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
 using Etch.OrchardCore.UserProfiles.Grouping.Models;
 using Etch.OrchardCore.UserProfiles.Grouping.Services;
+using Etch.OrchardCore.UserProfiles.Grouping.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
+using OrchardCore.ContentTypes.Editors;
 using OrchardCore.Data.Migration;
 using OrchardCore.Modules;
 using System;
@@ -22,6 +24,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping
             services.AddSingleton<IIndexProvider, ProfileGroupedPartIndexProvider>();
 
             services.AddScoped<IContentPartDisplayDriver, ProfileGroupPartDisplay>();
+            services.AddScoped<IContentTypePartDefinitionDisplayDriver, ProfileGroupPartSettingsDisplayDriver>();
             services.AddSingleton<ContentPart, ProfileGroupedPart>();
             services.AddSingleton<ContentPart, ProfileGroupPart>();
 
