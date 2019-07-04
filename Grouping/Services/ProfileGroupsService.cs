@@ -22,7 +22,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services {
 
         #region Implementation
 
-        public async Task<ContentItem> AsignGroupAsync(ContentItem profile, string groupContentItemId) {
+        public async Task<ContentItem> AssignGroupAsync(ContentItem profile, string groupContentItemId) {
 
             profile.Alter<ProfileGroupedPart>(x => x.GroupContentItemId = groupContentItemId);
 
@@ -39,6 +39,6 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services {
     }
 
     public interface IProfileGroupsService {
-        Task<ContentItem> AsignGroupAsync(ContentItem profile, string groupContentItemId);
+        Task<ContentItem> AssignGroupAsync(ContentItem profile, string groupContentItemId);
     }
 }
