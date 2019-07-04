@@ -43,7 +43,12 @@ namespace Etch.OrchardCore.UserProfiles
                 .WithPart("ProfilePart")
             );
 
-            await CreateProfilesForExistingUsersAsync();
+            /**
+             * Note:
+             * Caused an issue on initial orchard recipe setup so commented this out
+             */
+
+            // await CreateProfilesForExistingUsersAsync();
 
             return 1;
         }

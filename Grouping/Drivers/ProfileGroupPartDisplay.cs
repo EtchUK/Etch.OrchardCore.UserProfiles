@@ -1,5 +1,6 @@
 ﻿using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
 using Etch.OrchardCore.UserProfiles.Grouping.Models;
+using Etch.OrchardCore.UserProfiles.Grouping.Services;
 using Etch.OrchardCore.UserProfiles.Grouping.ViewModels;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
@@ -20,16 +21,18 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Drivers
         private readonly IContentDefinitionManager _contentDefinitionManager;
         private readonly IContentManager _contentManager;
         private readonly ISession _session;
+        private readonly IProfileGroupsService _profileGroupsService;
 
         #endregion
 
         #region Constructor
 
-        public ProfileGroupPartDisplay(IContentDefinitionManager contentDefinitionManager, IContentManager contentManager, ISession session)
+        public ProfileGroupPartDisplay(IContentDefinitionManager contentDefinitionManager, IContentManager contentManager, ISession session, IProfileGroupsService profileGroupsService)
         {
             _contentDefinitionManager = contentDefinitionManager;
             _contentManager = contentManager;
             _session = session;
+            _profileGroupsService = profileGroupsService;
         }
 
         #endregion
@@ -84,7 +87,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Drivers
                     continue;
                 }
 
-                await AssignGroupToProfile(existingProfile, null);
+                await _profileGroupsService.AssignGroupAsync(existingProfile, null);
             }
         }
 
@@ -92,24 +95,8 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Drivers
         {
             foreach (var contentItemId in contentItemIds)
             {
-                await AssignGroupToProfile(await _contentManager.GetAsync(contentItemId), groupContentItemId);
+                await _profileGroupsService.AssignGroupAsync(await _contentManager.GetAsync(contentItemId), groupContentItemId);
             }
-        }
-
-        private async Task AssignGroupToProfile(ContentItem profile, string groupContentItemId)
-        {
-            if (profile == null || profile.As<ProfileGroupedPart>() == null)
-            {
-                return;
-            }
-
-            profile.Alter<ProfileGroupedPart>(x => x.GroupContentItemId = groupContentItemId);
-
-            profile.Apply(nameof(ProfileGroupedPart), profile.As<ProfileGroupedPart>());
-            ContentExtensions.Apply(profile, profile);
-
-            await _contentManager.UpdateAsync(profile);
-            await _contentManager.PublishAsync(profile);
         }
 
         private ProfileGroupPartSettings GetSettings(ProfileGroupPart part)

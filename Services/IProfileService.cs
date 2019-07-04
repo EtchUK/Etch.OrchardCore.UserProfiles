@@ -1,10 +1,11 @@
-﻿using OrchardCore.Users;
+﻿using OrchardCore.ContentManagement;
+using OrchardCore.Users;
 using System.Threading.Tasks;
 
 namespace Etch.OrchardCore.UserProfiles.Services
 {
     public interface IProfileService
     {
-        Task CreateProfileAsync(IUser user);
+        Task<ContentItem> CreateProfileAsync(IUser user);
     }
 }
