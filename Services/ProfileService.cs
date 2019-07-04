@@ -28,7 +28,7 @@ namespace Etch.OrchardCore.UserProfiles.Services
 
         #region Implementation
 
-        public async Task CreateProfileAsync(IUser user)
+        public async Task<ContentItem> CreateProfileAsync(IUser user)
         {
             var contentItem = await _contentManager.NewAsync(Constants.ContentTypeName);
 
@@ -43,6 +43,8 @@ namespace Etch.OrchardCore.UserProfiles.Services
 
             await _contentManager.CreateAsync(contentItem);
             await _contentManager.PublishAsync(contentItem);
+
+            return contentItem;
         }
 
         #endregion
