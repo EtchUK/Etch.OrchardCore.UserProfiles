@@ -1,5 +1,4 @@
 ﻿using Etch.OrchardCore.UserProfiles.Drivers;
-using Etch.OrchardCore.UserProfiles.Grouping.Services;
 using Etch.OrchardCore.UserProfiles.Models;
 using Etch.OrchardCore.UserProfiles.Services;
 using Microsoft.Extensions.DependencyInjection;
