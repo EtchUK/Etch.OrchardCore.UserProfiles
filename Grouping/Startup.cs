@@ -25,6 +25,8 @@ namespace Etch.OrchardCore.UserProfiles.Grouping
 
             services.AddScoped<IContentPartDisplayDriver, ProfileGroupPartDisplay>();
             services.AddScoped<IContentTypePartDefinitionDisplayDriver, ProfileGroupPartSettingsDisplayDriver>();
+            services.AddScoped<IProfileGroupsService, ProfileGroupsService>();
+
             services.AddSingleton<ContentPart, ProfileGroupedPart>();
             services.AddSingleton<ContentPart, ProfileGroupPart>();
 
