@@ -14,6 +14,9 @@ This module is referencing the beta 3 build of Orchard Core ([`1.0.0-beta3-71077
 
 This module is available on our private NuGet feed, search "Etch.OrchardCore.UserProfiles" within NuGet package manager in order to install the module within your Orchard Core site project. Your project must be configured to use our private NuGet feed otherwise no results will be returned.
 
+## Features
+By default when enabling the module a new "Profile" content type will be defined. The current stable version of Orchard Core doesn't have a way to identify when users have been created, however this will be [available in the next release](https://github.com/OrchardCMS/OrchardCore/commit/58045f241c3bc0fb6692ae873fbca340098eb944).
+
 ### Profile Groups
 
 When enabled this feature will make a new "ProfileGroup" part available. When attached to a content type the content item can manage a list of profiles. Profiles can only be associated to a single profile group.
@@ -22,5 +25,5 @@ When enabled this feature will make a new "ProfileGroup" part available. When at
 
 When enabled this feature will make two new parts available "SubscriptionLevelPart" and "SubscriptionAccessPart".   
 "SubscriptionLevelPart" can be attached to either profile or groups to set a subscription level.   
-"SubscriptionAccessPart" can be used on any other content types to make the content available to specific users with the specific Subscription Level.
+Attaching the "SubscriptionAccessPart" to a content type allows content editors to restrict which subscription levels have access to view specific content items.
 

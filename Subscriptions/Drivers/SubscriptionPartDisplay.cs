@@ -10,13 +10,6 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
     public class SubscriptionPartDisplay : ContentPartDisplayDriver<SubscriptionPart>
     {
 
-        #region Constructor
-
-        public SubscriptionPartDisplay() {
-        }
-
-        #endregion
-
         #region Overrides
 
         public override IDisplayResult Edit(SubscriptionPart part)

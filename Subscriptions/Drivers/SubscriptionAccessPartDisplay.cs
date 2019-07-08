@@ -5,6 +5,7 @@ using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Services;
 using Etch.OrchardCore.UserProfiles.Subscriptions.ViewModels;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
+using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
 
@@ -14,9 +15,13 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
     public class SubscriptionAccessPartDisplay : ContentPartDisplayDriver<SubscriptionAccessPart>
     {
 
-        #region Constructor
+        #region Dependencies
 
         private readonly ISubscriptionsService _subscriptionsService;
+
+        #endregion
+
+        #region Constructor
 
         public SubscriptionAccessPartDisplay(ISubscriptionsService subscriptionsService)
         {
@@ -27,13 +32,13 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 
         #region Overrides
 
-        public override IDisplayResult Edit(SubscriptionAccessPart part)
+        public override async Task<IDisplayResult> EditAsync(SubscriptionAccessPart part, BuildPartEditorContext context)
         {
-            return Initialize<SubscriptionAccessPartViewModel>("SubscriptionAccessPart_Edit", model => {
-                var subscriptions = _subscriptionsService.GetAllAsync().GetAwaiter().GetResult();
+            return Initialize<SubscriptionAccessPartViewModel>("SubscriptionAccessPart_Edit", async model => {
+                var subscriptions = await _subscriptionsService.GetAllAsync();
                 model.SubscriptionAccessSelection = SelectedSubscriptionParts(subscriptions, part);
 
-                return Task.CompletedTask;
+                return;
             });
         }
 
@@ -54,7 +59,6 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 
         private SubscriptionPart[] SelectedSubscriptionParts(List<SubscriptionPart> subscriptions, SubscriptionAccessPart part)
         {
-
             return subscriptions.Select(x => new SubscriptionPart
             {
                 Identifier = x.Identifier,
@@ -65,7 +69,6 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 
         private bool IsSelectedSubscriptionPart(SubscriptionPart subscriptionPart, SubscriptionAccessPart part)
         {
-
             if(part.SubscriptionAccessSelection == null) {
                 return false;
             }
