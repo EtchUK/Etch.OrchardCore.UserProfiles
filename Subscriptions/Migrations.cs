@@ -35,7 +35,17 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions
                 .Listable()
             );
 
-            return 1;
+            _contentDefinitionManager.AlterPartDefinition("SubscriptionLevelPart", builder => builder
+                .Attachable()
+                .WithDescription("Add ability to add subscription level to user groups or profiles.")
+            );
+
+            _contentDefinitionManager.AlterPartDefinition("SubscriptionAccessPart", builder => builder
+                .Attachable()
+                .WithDescription("Add ability to add subscription access to content types.")
+            );
+
+            return 3;
         }
 
         public int UpdateFrom1()
@@ -46,6 +56,16 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions
             );
 
             return 2;
+        }
+
+        public int UpdateFrom2()
+        {
+            _contentDefinitionManager.AlterPartDefinition("SubscriptionAccessPart", builder => builder
+                .Attachable()
+                .WithDescription("Add ability to add subscription access to content types.")
+            );
+
+            return 3;
         }
 
         #endregion

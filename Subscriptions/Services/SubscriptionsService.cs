@@ -30,7 +30,7 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Services
                 results.Add(new SubscriptionPart
                 {
                     ContentItem = contentItem,
-                    Identifier = contentItem.ContentItemId,
+                    Identifier = contentItem.As<SubscriptionPart>().Identifier,
                 });
             }
 

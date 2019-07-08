@@ -1,0 +1,16 @@
+﻿@using Etch.OrchardCore.UserProfiles.Subscriptions.ViewModels;
+
+@model SubscriptionAccessPartViewModel
+
+<h5>@T["Access"]</h5>
+<fieldset class="form-group">
+
+    @for (var i = 0; i < Model.SubscriptionAccessSelection.Length; i++)
+    {
+        <div class="custom-control custom-checkbox">
+            <input asp-for="@Model.SubscriptionAccessSelection[i].IsSelected" type="checkbox" class="custom-control-input">
+            <input type="hidden" asp-for="@Model.SubscriptionAccessSelection[i].Identifier" />
+            <label class="custom-control-label" asp-for="@Model.SubscriptionAccessSelection[i].IsSelected">@Model.SubscriptionAccessSelection[i].ContentItem.DisplayText</label>
+        </div>
+    }
+</fieldset>

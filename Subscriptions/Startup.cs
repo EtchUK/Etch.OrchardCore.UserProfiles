@@ -16,11 +16,13 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions
         {
             services.AddScoped<IContentPartDisplayDriver, SubscriptionPartDisplay>();
             services.AddScoped<IContentPartDisplayDriver, SubscriptionLevelPartDisplay>();
+            services.AddScoped<IContentPartDisplayDriver, SubscriptionAccessPartDisplay>();
             services.AddScoped<ISubscriptionsService, SubscriptionsService>();
             services.AddScoped<IDataMigration, Migrations>();
 
             services.AddSingleton<ContentPart, SubscriptionPart>();
             services.AddSingleton<ContentPart, SubscriptionLevelPart>();
+            services.AddSingleton<ContentPart, SubscriptionAccessPart>();
 
         }
     }
