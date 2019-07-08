@@ -1,8 +1,6 @@
-﻿using System;
-using Etch.OrchardCore.UserProfiles.Subscriptions.Drivers;
+﻿using Etch.OrchardCore.UserProfiles.Subscriptions.Drivers;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
+using Etch.OrchardCore.UserProfiles.Subscriptions.Services;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
@@ -17,12 +15,13 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions
         public override void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IContentPartDisplayDriver, SubscriptionPartDisplay>();
-            services.AddSingleton<ContentPart, SubscriptionPart>();
+            services.AddScoped<IContentPartDisplayDriver, SubscriptionLevelPartDisplay>();
+            services.AddScoped<ISubscriptionsService, SubscriptionsService>();
             services.AddScoped<IDataMigration, Migrations>();
-        }
 
-        public override void Configure(IApplicationBuilder builder, IRouteBuilder routes, IServiceProvider serviceProvider)
-        {
+            services.AddSingleton<ContentPart, SubscriptionPart>();
+            services.AddSingleton<ContentPart, SubscriptionLevelPart>();
+
         }
     }
 }

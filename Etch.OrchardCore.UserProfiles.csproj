@@ -32,6 +32,7 @@
     <Folder Include="Subscriptions\Models\" />
     <Folder Include="Subscriptions\ViewModels\" />
     <Folder Include="Subscriptions\Drivers\" />
+    <Folder Include="Subscriptions\Services\" />
   </ItemGroup>
   <Target Name="BuildStaticAssetsForRelease" BeforeTargets="BeforeBuild" Condition="'$(Configuration)' == 'Release'">
     <Exec Command="npm install" />

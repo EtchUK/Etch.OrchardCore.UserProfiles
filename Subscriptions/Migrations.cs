@@ -38,6 +38,16 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions
             return 1;
         }
 
+        public int UpdateFrom1()
+        {
+            _contentDefinitionManager.AlterPartDefinition("SubscriptionLevelPart", builder => builder
+                .Attachable()
+                .WithDescription("Add ability to add subscription level to user groups or profiles.")
+            );
+
+            return 2;
+        }
+
         #endregion
     }
 }
