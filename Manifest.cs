@@ -24,3 +24,11 @@ using OrchardCore.Modules.Manifest;
     Description = "Manage a collection of profiles.",
     Dependencies = new string[] { "OrchardCore.ContentFields" }
 )]
+
+[assembly: Feature(
+    Id = Constants.Features.Subscriptions,
+    Name = "Subscriptions",
+    Category = "Users",
+    Description = "Manage profile subscriptions.",
+    Dependencies = new string[] { "OrchardCore.ContentFields" }
+)]
