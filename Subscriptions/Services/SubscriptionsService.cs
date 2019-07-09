@@ -4,19 +4,29 @@ using System.Threading.Tasks;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Records;
+using OrchardCore.Users;
 using YesSql;
 
 namespace Etch.OrchardCore.UserProfiles.Subscriptions.Services
 {
     public class SubscriptionsService : ISubscriptionsService
     {
+        #region Dependencies
+
         private readonly ISession _session;
+
+        #endregion
+
+        #region Constructor
 
         public SubscriptionsService(ISession session)
         {
             _session = session;
         }
 
+        #endregion
+
+        #region Implementation
 
         public async Task<List<SubscriptionPart>> GetAllAsync()
         {
@@ -36,10 +46,7 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Services
 
             return results.OrderBy(x => x.ContentItem.DisplayText).ToList();
         }
-    }
 
-    public interface ISubscriptionsService
-    {
-        Task<List<SubscriptionPart>> GetAllAsync();
+        #endregion
     }
 }

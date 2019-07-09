@@ -27,3 +27,7 @@ When enabled this feature will make two new parts available "SubscriptionLevelPa
 "SubscriptionLevelPart" can be attached to either profile or groups to set a subscription level.   
 Attaching the "SubscriptionAccessPart" to a content type allows content editors to restrict which subscription levels have access to view specific content items.
 
+### Subscription Access Profile Groups
+
+When enabled this feature will extend the subscriptions module to manage access to content items based on grouping subscription.
+

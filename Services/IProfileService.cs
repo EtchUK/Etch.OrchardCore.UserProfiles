@@ -6,6 +6,7 @@ namespace Etch.OrchardCore.UserProfiles.Services
 {
     public interface IProfileService
     {
-        Task<ContentItem> CreateProfileAsync(IUser user);
+        Task<ContentItem> CreateAsync(IUser user);
+        Task<ContentItem> GetAsync(IUser user);
     }
 }

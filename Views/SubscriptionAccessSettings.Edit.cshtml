@@ -1,0 +1,8 @@
+﻿@model Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.ViewModels.SubscriptionAccessSettingsViewModel;
+@using Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.ViewModels;
+
+<fieldset class="form-group" asp-validation-class-for="RedirectPath">
+    <label asp-for="RedirectPath">@T["Access Redirect Path"] <span asp-validation-for="RedirectPath"></span></label>
+    <input asp-for="RedirectPath" class="form-control content-preview-text content-caption-text" />
+    <span class="hint">The URL path that users get redirected when they don't have permission to access specific content.</span>
+</fieldset>

@@ -1,4 +1,5 @@
-﻿using Etch.OrchardCore.UserProfiles.Services;
+﻿using Etch.OrchardCore.UserProfiles.Indexes;
+using Etch.OrchardCore.UserProfiles.Services;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Data.Migration;
@@ -43,6 +44,14 @@ namespace Etch.OrchardCore.UserProfiles
                 .WithPart("ProfilePart")
             );
 
+            SchemaBuilder.CreateMapIndexTable(nameof(ProfilePartIndex), table => table
+                .Column<string>("UserIdentifier", c => c.WithLength(40))
+            );
+
+            SchemaBuilder.AlterTable(nameof(ProfilePartIndex), table => table
+                .CreateIndex("IDX_ProfilePartIndex_UserIdentifier", "UserIdentifier")
+            );
+
             /**
              * Note:
              * Caused an issue on initial orchard recipe setup so commented this out
@@ -50,7 +59,20 @@ namespace Etch.OrchardCore.UserProfiles
 
             // await CreateProfilesForExistingUsersAsync();
 
-            return 1;
+            return 2;
+        }
+
+        public int UpdateFrom1()
+        {
+            SchemaBuilder.CreateMapIndexTable(nameof(ProfilePartIndex), table => table
+                .Column<string>("UserIdentifier", c => c.WithLength(40))
+            );
+
+            SchemaBuilder.AlterTable(nameof(ProfilePartIndex), table => table
+                .CreateIndex("IDX_ProfilePartIndex_UserIdentifier", "UserIdentifier")
+            );
+
+            return 2;
         }
 
         #endregion
@@ -63,7 +85,7 @@ namespace Etch.OrchardCore.UserProfiles
 
             foreach (var user in users)
             {
-                await _profileService.CreateProfileAsync(user);
+                await _profileService.CreateAsync(user);
             }
         }
 

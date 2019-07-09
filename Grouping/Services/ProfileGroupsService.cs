@@ -1,21 +1,27 @@
 ﻿
 using System.Threading.Tasks;
 using Etch.OrchardCore.UserProfiles.Grouping.Models;
+using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement.Records;
+using YesSql;
 
-namespace Etch.OrchardCore.UserProfiles.Grouping.Services {
+namespace Etch.OrchardCore.UserProfiles.Grouping.Services
+{
     public class ProfileGroupsService : IProfileGroupsService {
 
         #region Dependencies
 
         private readonly IContentManager _contentManager;
+        private readonly ISession _session;
 
         #endregion
 
         #region Constructor
 
-        public ProfileGroupsService(IContentManager contentManager) {
+        public ProfileGroupsService(IContentManager contentManager, ISession session) {
             _contentManager = contentManager;
+            _session = session;
         }
 
         #endregion
@@ -35,10 +41,28 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services {
             return profile;
         }
 
-        #endregion
-    }
+        public async Task<ContentItem> GetAsync(ContentItem contentItem)
+        {
+            var profileGroupedPart = contentItem.As<ProfileGroupedPart>();
 
-    public interface IProfileGroupsService {
-        Task<ContentItem> AssignGroupAsync(ContentItem profile, string groupContentItemId);
+            if(profileGroupedPart == null) {
+                return null;
+            }
+
+            var contentItems = await _session.Query<ContentItem>()
+                                      .With<ContentItemIndex>(x => x.Published && x.Latest && x.ContentItemId == profileGroupedPart.GroupContentItemId)
+                                      .FirstOrDefaultAsync();
+
+            return contentItems;
+        }
+
+        public async Task<SubscriptionLevelPart> GetSubscriptionAccessAsync(ContentItem contentItem)
+        {
+            var group = await GetAsync(contentItem);
+
+            return group.As<SubscriptionLevelPart>();
+        }
+ 
+        #endregion
     }
 }

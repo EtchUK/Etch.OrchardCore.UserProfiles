@@ -32,6 +32,11 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 
         #region Overrides
 
+        public override IDisplayResult Display(SubscriptionAccessPart part, BuildPartDisplayContext context)
+        {
+            return null;
+        }
+
         public override async Task<IDisplayResult> EditAsync(SubscriptionAccessPart part, BuildPartEditorContext context)
         {
             return Initialize<SubscriptionAccessPartViewModel>("SubscriptionAccessPart_Edit", async model => {
@@ -77,7 +82,5 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
         }
 
         #endregion
-
-
     }
 }
