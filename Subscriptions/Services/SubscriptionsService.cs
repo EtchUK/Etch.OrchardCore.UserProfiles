@@ -34,7 +34,7 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Services
                 });
             }
 
-            return results;
+            return results.OrderBy(x => x.ContentItem.DisplayText).ToList();
         }
     }
 
