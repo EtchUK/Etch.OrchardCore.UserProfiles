@@ -14,18 +14,18 @@ namespace Etch.OrchardCore.UserProfiles.Services
         #region Dependencies
 
         private readonly IContentManager _contentManager;
-        private readonly UserManager<IUser> _userManager;
         private readonly ISession _session;
+        private readonly UserManager<IUser> _userManager;
 
         #endregion
 
         #region Constructor
 
-        public ProfileService(IContentManager contentManager, UserManager<IUser> userManager, ISession session)
+        public ProfileService(IContentManager contentManager, ISession session, UserManager<IUser> userManager)
         {
             _contentManager = contentManager;
-            _userManager = userManager;
             _session = session;
+            _userManager = userManager;
         }
 
         #endregion

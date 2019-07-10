@@ -49,7 +49,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 
             return Initialize<SubscriptionAccessSettingsViewModel>("SubscriptionAccessSettings_Edit", async model =>
             {
-                model.RedirectPath = settings.RedirectPath;
+                model.UnauthorisedRedirectPath = settings.UnauthorisedRedirectPath;
 
             }).Location("Content:3").OnGroup(GroupId);
         }
@@ -67,7 +67,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 
                 await context.Updater.TryUpdateModelAsync(model, Prefix);
 
-                settings.RedirectPath = model.RedirectPath;
+                settings.UnauthorisedRedirectPath = model.UnauthorisedRedirectPath;
             }
 
             return await EditAsync(settings, context);

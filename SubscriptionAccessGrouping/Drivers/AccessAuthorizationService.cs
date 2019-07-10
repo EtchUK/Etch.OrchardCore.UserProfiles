@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Etch.OrchardCore.UserProfiles.Grouping.Services;
 using Etch.OrchardCore.UserProfiles.Services;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using Microsoft.AspNetCore.Authorization;
-using OrchardCore.Users;
 using OrchardCore.Users.Services;
 using Permissions = OrchardCore.Contents.Permissions;
 
@@ -17,21 +15,21 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 
         #region Dependencies
 
-        private readonly IProfileService _profileService;
         private readonly IAuthorizationService _authorizationService;
-        private readonly IUserService _userService;
         private readonly IProfileGroupsService _profileGroupsService;
+        private readonly IProfileService _profileService;
+        private readonly IUserService _userService;
 
         #endregion
 
         #region Constructor
 
-        public AccessAuthorizationService(IProfileService profileService, IAuthorizationService authorizationService, IUserService userService, IProfileGroupsService profileGroupsService)
+        public AccessAuthorizationService(IAuthorizationService authorizationService, IProfileGroupsService profileGroupsService, IProfileService profileService, IUserService userService)
         {
-            _profileService = profileService;
             _authorizationService = authorizationService;
-            _userService = userService;
             _profileGroupsService = profileGroupsService;
+            _profileService = profileService;
+            _userService = userService;
         }
 
         #endregion
@@ -41,7 +39,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
         public async Task<bool> CanViewContent(ClaimsPrincipal userPrincipal, SubscriptionPart[] subscriptionAccessSelection)
         {
             // The content item doesn't have any subscription access so it's viewable to everyone.
-            if(subscriptionAccessSelection == null || !subscriptionAccessSelection.Any(x => x.IsSelected)) {
+            if (subscriptionAccessSelection == null || !subscriptionAccessSelection.Any(x => x.IsSelected)) {
                 return true;
             }
 
@@ -62,18 +60,18 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
             // Get user profile
             var profile = await _profileService.GetAsync(user);
 
-            if(profile == null) {
+            if (profile == null) {
                 return false;
             }
 
             // Get subscription level on the group
             var group = await _profileGroupsService.GetSubscriptionAccessAsync(profile);
 
-            if(group == null) {
+            if (group == null) {
                 return false;
             }
 
-            if(!subscriptionAccessSelection.Any(x => x.Identifier == group.Subscription)) {
+            if (!subscriptionAccessSelection.Any(x => x.Identifier == group.Subscription)) {
                 return false;
             }
 

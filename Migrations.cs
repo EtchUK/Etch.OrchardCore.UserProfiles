@@ -12,6 +12,12 @@ namespace Etch.OrchardCore.UserProfiles
 {
     public class Migrations : DataMigration
     {
+        #region Constants
+
+        public const int UserIdenityMaxLength = 40;
+
+        #endregion
+
         #region Dependencies
 
         private readonly IContentDefinitionManager _contentDefinitionManager;
@@ -45,7 +51,7 @@ namespace Etch.OrchardCore.UserProfiles
             );
 
             SchemaBuilder.CreateMapIndexTable(nameof(ProfilePartIndex), table => table
-                .Column<string>("UserIdentifier", c => c.WithLength(40))
+                .Column<string>("UserIdentifier", c => c.WithLength(UserIdenityMaxLength))
             );
 
             SchemaBuilder.AlterTable(nameof(ProfilePartIndex), table => table
@@ -65,7 +71,7 @@ namespace Etch.OrchardCore.UserProfiles
         public int UpdateFrom1()
         {
             SchemaBuilder.CreateMapIndexTable(nameof(ProfilePartIndex), table => table
-                .Column<string>("UserIdentifier", c => c.WithLength(40))
+                .Column<string>("UserIdentifier", c => c.WithLength(UserIdenityMaxLength))
             );
 
             SchemaBuilder.AlterTable(nameof(ProfilePartIndex), table => table

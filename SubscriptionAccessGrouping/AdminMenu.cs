@@ -22,7 +22,7 @@ namespace UKIE.OrchardCore.UserProfiles.SubscriptionAccessGrouping
             builder
                 .Add(T["Configuration"], configuration => configuration
                     .Add(T["Subscriptions"], settings => settings
-                        .Add(T["Access Redirect"], T["Access Redirect"], layers => layers
+                        .Add(T["Security"], T["Security"], layers => layers
                             .Action("Index", "Admin", new { area = "OrchardCore.Settings", groupId = SubscriptionAccessSettingsDisplay.GroupId })
                             .Permission(Permissions.ManageSubscription)
                             .LocalNav()

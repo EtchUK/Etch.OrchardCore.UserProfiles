@@ -58,9 +58,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
 
         public async Task<SubscriptionLevelPart> GetSubscriptionAccessAsync(ContentItem contentItem)
         {
-            var group = await GetAsync(contentItem);
-
-            return group.As<SubscriptionLevelPart>();
+            return (await GetAsync(contentItem)).As<SubscriptionLevelPart>();
         }
  
         #endregion

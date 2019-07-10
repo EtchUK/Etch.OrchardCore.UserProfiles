@@ -13,19 +13,19 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 
         #region Dependencies
 
-        private readonly ISubscriptionAccessSettingsService _subscriptionAccessSettingsService;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IAccessAuthorizationService _accessAuthorizationService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ISubscriptionAccessSettingsService _subscriptionAccessSettingsService;
 
         #endregion
 
         #region Constructor
 
-        public SubscriptionAccessGoupingPartDisplay(ISubscriptionAccessSettingsService subscriptionAccessSettingsService, IHttpContextAccessor httpContextAccessor, IAccessAuthorizationService accessAuthorizationService)
+        public SubscriptionAccessGoupingPartDisplay(IAccessAuthorizationService accessAuthorizationService, IHttpContextAccessor httpContextAccessor, ISubscriptionAccessSettingsService subscriptionAccessSettingsService)
         {
-            _subscriptionAccessSettingsService = subscriptionAccessSettingsService;
-            _httpContextAccessor = httpContextAccessor;
             _accessAuthorizationService = accessAuthorizationService;
+            _httpContextAccessor = httpContextAccessor;
+            _subscriptionAccessSettingsService = subscriptionAccessSettingsService;
         }
 
         #endregion
@@ -36,7 +36,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
         {
 
             // If the request is not a detail page then we allow users to view the content
-            if(context.DisplayType != "Detail") {
+            if (context.DisplayType != "Detail") {
                 return null;
             }
 
@@ -46,7 +46,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
                 return null;
             }
 
-            _httpContextAccessor.HttpContext.Response.Redirect(settings.RedirectPath);
+            _httpContextAccessor.HttpContext.Response.Redirect(settings.UnauthorisedRedirectPath);
 
             return null;
         } 

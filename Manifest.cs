@@ -37,6 +37,6 @@ using OrchardCore.Modules.Manifest;
     Id = Constants.Features.SubscriptionAccessGrouping,
     Name = "Subscription Access Profile Groups",
     Category = "Users",
-    Description = "Manage access to content items based on grouping subscription.",
+    Description = "Authorises subscription access based on profile groups.",
     Dependencies = new string[] { "OrchardCore.ContentFields", Constants.Features.Subscriptions, Constants.Features.Grouping }
 )]
