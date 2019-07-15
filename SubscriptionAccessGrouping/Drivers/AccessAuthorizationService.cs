@@ -46,7 +46,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
             subscriptionAccessSelection = subscriptionAccessSelection.Where(x => x.IsSelected).ToArray();
 
             // If logged in user is an admin of CMS can view the content
-            if (await _authorizationService.AuthorizeAsync(userPrincipal, Permissions.ViewContent)) {
+            if (await _authorizationService.AuthorizeAsync(userPrincipal, Permissions.EditContent)) {
                 return true;
             }
 

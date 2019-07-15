@@ -46,7 +46,9 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
                 return null;
             }
 
-            _httpContextAccessor.HttpContext.Response.Redirect(settings.UnauthorisedRedirectPath);
+            // If there is no redirect URL has been specified
+            // then we redirect users to the root of the website.
+            _httpContextAccessor.HttpContext.Response.Redirect(string.IsNullOrEmpty(settings.UnauthorisedRedirectPath) ? "/" : settings.UnauthorisedRedirectPath);
 
             return null;
         } 
