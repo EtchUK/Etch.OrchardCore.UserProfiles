@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.DisplayManagement.Views;
+using OrchardCore.Environment.Shell;
 
 namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 {
@@ -15,17 +16,19 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 
         private readonly IAccessAuthorizationService _accessAuthorizationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ShellSettings _shellSettings;
         private readonly ISubscriptionAccessSettingsService _subscriptionAccessSettingsService;
 
         #endregion
 
         #region Constructor
 
-        public SubscriptionAccessGoupingPartDisplay(IAccessAuthorizationService accessAuthorizationService, IHttpContextAccessor httpContextAccessor, ISubscriptionAccessSettingsService subscriptionAccessSettingsService)
+        public SubscriptionAccessGoupingPartDisplay(IAccessAuthorizationService accessAuthorizationService, IHttpContextAccessor httpContextAccessor, ShellSettings shellSettings, ISubscriptionAccessSettingsService subscriptionAccessSettingsService)
         {
             _accessAuthorizationService = accessAuthorizationService;
             _httpContextAccessor = httpContextAccessor;
             _subscriptionAccessSettingsService = subscriptionAccessSettingsService;
+            _shellSettings = shellSettings;
         }
 
         #endregion
@@ -48,10 +51,20 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 
             // If there is no redirect URL has been specified
             // then we redirect users to the root of the website.
-            _httpContextAccessor.HttpContext.Response.Redirect(string.IsNullOrEmpty(settings.UnauthorisedRedirectPath) ? "/" : settings.UnauthorisedRedirectPath);
+            _httpContextAccessor.HttpContext.Response.Redirect(string.IsNullOrEmpty(settings.UnauthorisedRedirectPath) ? GetTenantUrl() : settings.UnauthorisedRedirectPath);
 
             return null;
-        } 
+        }
+
+        #endregion
+
+        #region Helpers
+
+        private string GetTenantUrl()
+        {
+            return "/" + _shellSettings.RequestUrlPrefix;
+        }
+
 
         #endregion
     }
