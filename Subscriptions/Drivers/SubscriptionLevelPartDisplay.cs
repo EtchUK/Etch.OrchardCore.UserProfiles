@@ -1,9 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Services;
+using Etch.OrchardCore.UserProfiles.Subscriptions.Settings;
 using Etch.OrchardCore.UserProfiles.Subscriptions.ViewModels;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
+using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
 
@@ -15,14 +19,18 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 
         #region Dependencies
 
+        private readonly ISubscriptionLevelService _subscriptionLevelService;
+        private readonly ISubscriptionPartService _subscriptionPartService;
         private readonly ISubscriptionsService _subscriptionsService;
 
         #endregion
 
         #region Constructor
 
-        public SubscriptionLevelPartDisplay(ISubscriptionsService subscriptionsService)
+        public SubscriptionLevelPartDisplay(ISubscriptionLevelService subscriptionLevelService, ISubscriptionPartService subscriptionPartService, ISubscriptionsService subscriptionsService)
         {
+            _subscriptionLevelService = subscriptionLevelService;
+            _subscriptionPartService = subscriptionPartService;
             _subscriptionsService = subscriptionsService;
         }
 
@@ -35,6 +43,9 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
             return Initialize<SubscriptionLevelPartViewModel>("SubscriptionLevelPart_Edit", async model => {
                 model.Subscription = part.Subscription;
                 model.Subscriptions = await _subscriptionsService.GetAllAsync();
+                model.SubscriptionSelection = _subscriptionPartService.SelectedSubscriptionParts(model.Subscriptions, part);
+
+                model.Settings = _subscriptionLevelService.GetSettings(part);
 
                 return;
             });
@@ -46,6 +57,7 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 
             if (await updater.TryUpdateModelAsync(model, Prefix)) {
                 part.Subscription = model.Subscription;
+                part.SubscriptionSelection = model.SubscriptionSelection;
             }
 
             return Edit(part);

@@ -45,7 +45,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 
             var settings = await _subscriptionAccessSettingsService.GetSettingsAsync();
 
-            if (await _accessAuthorizationService.CanViewContent(_httpContextAccessor.HttpContext?.User, part.SubscriptionAccessSelection)) {
+            if (await _accessAuthorizationService.CanViewContent(_httpContextAccessor.HttpContext?.User, part.SubscriptionSelection)) {
                 return null;
             }
 
