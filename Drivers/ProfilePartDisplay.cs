@@ -1,10 +1,12 @@
 ﻿using Etch.OrchardCore.UserProfiles.Models;
+using Etch.OrchardCore.UserProfiles.Services;
 using Etch.OrchardCore.UserProfiles.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Users;
+using OrchardCore.Users.Models;
 using OrchardCore.Users.Services;
 using System.Threading.Tasks;
 
@@ -14,6 +16,7 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
     {
         #region Dependencies
 
+        private readonly IURLService _urlService;
         private readonly UserManager<IUser> _userManager;
         private readonly IUserService _userService;
 
@@ -21,10 +24,11 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
 
         #region Constructor
 
-        public ProfilePartDisplay(UserManager<IUser> userManager, IUserService userService)
+        public ProfilePartDisplay(IURLService urlService, UserManager<IUser> userManager, IUserService userService)
         {
             _userManager = userManager;
             _userService = userService;
+            _urlService = urlService;
         }
 
         #endregion
@@ -43,11 +47,13 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
 
         public override async Task<IDisplayResult> EditAsync(ProfilePart part, BuildPartEditorContext context)
         {
-            var user = await _userService.GetUserByUniqueIdAsync(part.UserIdentifier);
+            var user = (User)await _userService.GetUserByUniqueIdAsync(part.UserIdentifier);
 
             return Initialize<ProfilePartViewModel>("ProfilePart_Edit", model =>
             {
                 model.UserName = user.UserName;
+                model.Id = user.Id;
+                model.SiteURL = _urlService.GetTenantUrl();
             });
         }
 
@@ -75,5 +81,6 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
         }
 
         #endregion
+
     }
 }

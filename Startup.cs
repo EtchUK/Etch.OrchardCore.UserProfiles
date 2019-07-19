@@ -21,6 +21,7 @@ namespace Etch.OrchardCore.UserProfiles
             services.AddSingleton<ContentPart, ProfilePart>();
 
             services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IURLService, URLService>();
 
             services.AddSingleton<IIndexProvider, ProfilePartIndexProvider>();
 

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Etch.OrchardCore.UserProfiles.Services;
 using Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Services;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using Microsoft.AspNetCore.Http;
@@ -11,24 +12,23 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 {
     public class SubscriptionAccessGoupingPartDisplay : ContentPartDisplayDriver<SubscriptionAccessPart>
     {
-
         #region Dependencies
 
         private readonly IAccessAuthorizationService _accessAuthorizationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ShellSettings _shellSettings;
         private readonly ISubscriptionAccessSettingsService _subscriptionAccessSettingsService;
+        private readonly IURLService _urlService;
 
         #endregion
 
         #region Constructor
 
-        public SubscriptionAccessGoupingPartDisplay(IAccessAuthorizationService accessAuthorizationService, IHttpContextAccessor httpContextAccessor, ShellSettings shellSettings, ISubscriptionAccessSettingsService subscriptionAccessSettingsService)
+        public SubscriptionAccessGoupingPartDisplay(IAccessAuthorizationService accessAuthorizationService, IHttpContextAccessor httpContextAccessor, ISubscriptionAccessSettingsService subscriptionAccessSettingsService, IURLService urlService)
         {
             _accessAuthorizationService = accessAuthorizationService;
             _httpContextAccessor = httpContextAccessor;
             _subscriptionAccessSettingsService = subscriptionAccessSettingsService;
-            _shellSettings = shellSettings;
+            _urlService = urlService;
         }
 
         #endregion
@@ -51,21 +51,13 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 
             // If there is no redirect URL has been specified
             // then we redirect users to the root of the website.
-            _httpContextAccessor.HttpContext.Response.Redirect(string.IsNullOrEmpty(settings.UnauthorisedRedirectPath) ? GetTenantUrl() : settings.UnauthorisedRedirectPath);
+            _httpContextAccessor.HttpContext.Response.StatusCode = 401;
+            _httpContextAccessor.HttpContext.Response.Redirect(string.IsNullOrEmpty(settings.UnauthorisedRedirectPath) ? _urlService.GetTenantUrl() : settings.UnauthorisedRedirectPath, false);
 
             return null;
         }
 
         #endregion
 
-        #region Helpers
-
-        private string GetTenantUrl()
-        {
-            return "/" + _shellSettings.RequestUrlPrefix;
-        }
-
-
-        #endregion
     }
 }
