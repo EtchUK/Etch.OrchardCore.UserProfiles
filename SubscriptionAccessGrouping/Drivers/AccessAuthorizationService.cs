@@ -82,7 +82,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
             }
 
             // Check subsciption on multiple subscription level
-            if(allowMultiple && !subscriptionAccessSelection.Any(x => group.SubscriptionSelection.Any(y => y.Identifier == x.Identifier && y.IsSelected))) {
+            if (allowMultiple && !subscriptionAccessSelection.Any(x => group.SubscriptionSelection.Any(y => y.Identifier == x.Identifier && y.IsSelected))) {
                 return false;
             }
 

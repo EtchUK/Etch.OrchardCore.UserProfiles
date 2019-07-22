@@ -24,12 +24,16 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Services
 
         #endregion
 
+        #region Implementations
+
         public SubscriptionLevelPartSettings GetSettings(SubscriptionLevelPart subscriptionLevelPart)
         {
             var contentTypeDefinition = _contentDefinitionManager.GetTypeDefinition(subscriptionLevelPart.ContentItem.ContentType);
             var contentTypePartDefinition = contentTypeDefinition.Parts.FirstOrDefault(x => string.Equals(x.PartDefinition.Name, nameof(SubscriptionLevelPart), StringComparison.Ordinal));
             return contentTypePartDefinition.Settings.ToObject<SubscriptionLevelPartSettings>();
         }
+
+        #endregion
     }
 
     public interface ISubscriptionLevelService
