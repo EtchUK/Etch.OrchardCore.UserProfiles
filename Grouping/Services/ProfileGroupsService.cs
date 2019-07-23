@@ -1,6 +1,10 @@
 ﻿
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
 using Etch.OrchardCore.UserProfiles.Grouping.Models;
+using Etch.OrchardCore.UserProfiles.Indexes;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Records;
@@ -39,6 +43,14 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
             await _contentManager.PublishAsync(profile);
 
             return profile;
+        }
+
+        public async Task<IList<ContentItem>> GetAllGroupsAsync() {
+            return (await _session.Query<ContentItem>()
+                .With<ContentItemIndex>(x => x.Published)
+                .With<ProfileGroupPartIndex>(x => x.Id == x.Id)
+                .ListAsync())
+                .ToList();
         }
 
         public async Task<ContentItem> GetAsync(ContentItem contentItem)
