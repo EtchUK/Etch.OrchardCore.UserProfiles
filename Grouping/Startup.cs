@@ -21,6 +21,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping
     {
         public override void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IIndexProvider, ProfileGroupPartIndexProvider>();
             services.AddSingleton<IIndexProvider, ProfileGroupedPartIndexProvider>();
 
             services.AddScoped<IContentPartDisplayDriver, ProfileGroupPartDisplay>();

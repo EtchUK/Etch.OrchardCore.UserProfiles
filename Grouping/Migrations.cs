@@ -30,6 +30,8 @@ namespace Etch.OrchardCore.UserProfiles.Grouping
                 .Attachable()
                 .WithDescription("Add ability to group user profiles."));
 
+            SchemaBuilder.CreateMapIndexTable(nameof(ProfileGroupPartIndex), table => { });
+
             SchemaBuilder.CreateMapIndexTable(nameof(ProfileGroupedPartIndex), table => table
                 .Column<string>("GroupContentItemId", c => c.WithLength(26))
             );
@@ -42,7 +44,14 @@ namespace Etch.OrchardCore.UserProfiles.Grouping
                 .WithPart("ProfileGroupedPart")
             );
 
-            return 1;
+            return 2;
+        }
+
+        public int UpdateFrom1()
+        {
+            SchemaBuilder.CreateMapIndexTable(nameof(ProfileGroupPartIndex), table => { });
+
+            return 2;
         }
 
         #endregion
