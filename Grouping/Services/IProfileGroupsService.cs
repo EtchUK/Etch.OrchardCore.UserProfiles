@@ -9,6 +9,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
     {
         Task<ContentItem> AssignGroupAsync(ContentItem profile, string groupContentItemId);
         Task<IList<ContentItem>> GetAllGroupsAsync();
+        Task<IList<ContentItem>> GetGroupsByIdsAsync(ICollection<string> ids);
         Task<ContentItem> GetAsync(ContentItem contentItem);
         Task<SubscriptionLevelPart> GetSubscriptionAccessAsync(ContentItem contentItem);
     }

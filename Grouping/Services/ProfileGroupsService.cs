@@ -9,6 +9,7 @@ using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Records;
 using YesSql;
+using YesSql.Services;
 
 namespace Etch.OrchardCore.UserProfiles.Grouping.Services
 {
@@ -48,6 +49,14 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
         public async Task<IList<ContentItem>> GetAllGroupsAsync() {
             return (await _session.Query<ContentItem>()
                 .With<ContentItemIndex>(x => x.Published)
+                .With<ProfileGroupPartIndex>(x => x.Id == x.Id)
+                .ListAsync())
+                .ToList();
+        }
+
+        public async Task<IList<ContentItem>> GetGroupsByIdsAsync(ICollection<string> ids) {
+            return (await _session.Query<ContentItem>()
+                .With<ContentItemIndex>(x => x.Published && x.ContentItemId.IsIn(ids))
                 .With<ProfileGroupPartIndex>(x => x.Id == x.Id)
                 .ListAsync())
                 .ToList();
