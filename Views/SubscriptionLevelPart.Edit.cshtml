@@ -3,10 +3,32 @@
 @model SubscriptionLevelPartViewModel
 
 <h5>@T["Subscriptions"]</h5>
+
+@if (Model.Settings.Multiple)
+{
 <fieldset class="form-group">
-    <select asp-for="Subscription" class="form-control">
-        @for (var i = 0; i < Model.Subscriptions.Count; i++) {
-        <option value="@Model.Subscriptions[i].Identifier">@Model.Subscriptions[i].ContentItem.DisplayText</option>
-        }
-    </select>
+    <div class="row">
+    @for (var i = 0; i < Model.SubscriptionSelection.Length; i++)
+    {
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+            <div class="custom-control custom-checkbox">
+                <input asp-for="@Model.SubscriptionSelection[i].IsSelected" type="checkbox" class="custom-control-input">
+                <input type="hidden" asp-for="@Model.SubscriptionSelection[i].Identifier" />
+                <label class="custom-control-label" asp-for="@Model.SubscriptionSelection[i].IsSelected">@Model.SubscriptionSelection[i].ContentItem.DisplayText</label>
+            </div>
+        </div>
+    }
+    </div>
 </fieldset>
+}
+else
+{
+    <fieldset class="form-group">
+        <select asp-for="Subscription" class="form-control">
+            @for (var i = 0; i < Model.Subscriptions.Count; i++)
+            {
+                <option value="@Model.Subscriptions[i].Identifier">@Model.Subscriptions[i].ContentItem.DisplayText</option>
+            }
+        </select>
+    </fieldset>
+}

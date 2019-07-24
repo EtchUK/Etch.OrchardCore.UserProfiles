@@ -1,9 +1,6 @@
-﻿using OrchardCore.ContentManagement;
-
-namespace Etch.OrchardCore.UserProfiles.Subscriptions.Models
+﻿namespace Etch.OrchardCore.UserProfiles.Subscriptions.Models
 {
-    public class SubscriptionAccessPart : ContentPart
+    public class SubscriptionAccessPart : ISubscriptionContentPart
     {
-        public SubscriptionPart[] SubscriptionAccessSelection { get; set; }
     }
 }

@@ -4,6 +4,6 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.ViewModels
 {
     public class SubscriptionAccessPartViewModel
     {
-        public SubscriptionPart[] SubscriptionAccessSelection { get; set; }
+        public SubscriptionPart[] SubscriptionSelection { get; set; }
     }
 }

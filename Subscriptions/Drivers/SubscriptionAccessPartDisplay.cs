@@ -17,14 +17,16 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 
         #region Dependencies
 
+        private readonly ISubscriptionPartService _subscriptionPartService;
         private readonly ISubscriptionsService _subscriptionsService;
 
         #endregion
 
         #region Constructor
 
-        public SubscriptionAccessPartDisplay(ISubscriptionsService subscriptionsService)
+        public SubscriptionAccessPartDisplay(ISubscriptionPartService subscriptionPartService, ISubscriptionsService subscriptionsService)
         {
+            _subscriptionPartService = subscriptionPartService;
             _subscriptionsService = subscriptionsService;
         }
 
@@ -41,7 +43,7 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
         {
             return Initialize<SubscriptionAccessPartViewModel>("SubscriptionAccessPart_Edit", async model => {
                 var subscriptions = await _subscriptionsService.GetAllAsync();
-                model.SubscriptionAccessSelection = SelectedSubscriptionParts(subscriptions, part);
+                model.SubscriptionSelection = _subscriptionPartService.SelectedSubscriptionParts(subscriptions, part);
 
                 return;
             });
@@ -52,7 +54,7 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
             var model = new SubscriptionAccessPartViewModel();
 
             if (await updater.TryUpdateModelAsync(model, Prefix)) {
-                part.SubscriptionAccessSelection = model.SubscriptionAccessSelection;
+                part.SubscriptionSelection = model.SubscriptionSelection;
             }
 
             return Edit(part);
@@ -60,27 +62,5 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 
         #endregion
 
-        #region Helpers
-
-        private SubscriptionPart[] SelectedSubscriptionParts(List<SubscriptionPart> subscriptions, SubscriptionAccessPart part)
-        {
-            return subscriptions.Select(x => new SubscriptionPart
-            {
-                Identifier = x.Identifier,
-                ContentItem = x.ContentItem,
-                IsSelected = IsSelectedSubscriptionPart(x, part)
-            }).ToArray();
-        }
-
-        private bool IsSelectedSubscriptionPart(SubscriptionPart subscriptionPart, SubscriptionAccessPart part)
-        {
-            if(part.SubscriptionAccessSelection == null) {
-                return false;
-            }
-
-            return part.SubscriptionAccessSelection.Any(x => x.Identifier == subscriptionPart.Identifier && x.IsSelected);
-        }
-
-        #endregion
     }
 }
