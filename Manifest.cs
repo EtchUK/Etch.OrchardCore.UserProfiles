@@ -26,6 +26,14 @@ using OrchardCore.Modules.Manifest;
 )]
 
 [assembly: Feature(
+    Id = Constants.Features.GroupField,
+    Name = "Profile Group Field",
+    Category = "Content",
+    Description = "Adds a field for picking a Profile Group.",
+    Dependencies = new string[] { Constants.Features.Grouping }
+)]
+
+[assembly: Feature(
     Id = Constants.Features.Subscriptions,
     Name = "Subscriptions",
     Category = "Users",

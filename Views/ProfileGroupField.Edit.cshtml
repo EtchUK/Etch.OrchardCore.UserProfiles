@@ -1,0 +1,20 @@
+﻿@using Etch.OrchardCore.UserProfiles.GroupField.Models;
+@using OrchardCore.ContentManagement.Metadata.Models;
+
+@model Etch.OrchardCore.UserProfiles.GroupField.ViewModels.EditProfileGroupFieldViewModel
+
+@{
+    var settings = Model.PartFieldDefinition.Settings.ToObject<ProfileGroupFieldSettings>();
+}
+
+<fieldset class="form-group">
+    <label asp-for="ProfileGroupContentItemIds">@Model.PartFieldDefinition.DisplayName()</label>
+    <select asp-for="ProfileGroupContentItemIds" class="form-control content-preview-select">
+        <option value="">@T["None"]</option>
+        @foreach (var option in Model.PossibleProfileGroupOptions)
+        {
+            <option value="@option.ContentItemId">@option.DisplayText</option>
+        }
+    </select>
+    <span class="hint">@settings.Hint</span>
+</fieldset>

@@ -10,6 +10,7 @@
         {
             public const string Core = "Etch.OrchardCore.Profiles";
             public const string Grouping = "Etch.OrchardCore.Profiles.Grouping";
+            public const string GroupField = "Etch.OrchardCore.Profiles.GroupField";
             public const string Subscriptions = "Etch.OrchardCore.Profiles.Subscriptions";
             public const string SubscriptionAccessGrouping = "Etch.OrchardCore.Profiles.SubscriptionAccessGrouping";
         }
