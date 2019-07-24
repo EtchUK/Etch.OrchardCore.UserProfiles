@@ -73,8 +73,6 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
                 {
                     context.Updater.ModelState.AddModelError("UserName", $"{message}");
                 }) as User;
-
-                return await EditAsync(part, context);
             }
 
             part.UserIdentifier = await _userManager.GetUserIdAsync(user);
