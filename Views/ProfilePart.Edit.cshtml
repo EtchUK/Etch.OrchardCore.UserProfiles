@@ -1,9 +1,21 @@
 ﻿@using Etch.OrchardCore.UserProfiles.ViewModels;
 @model ProfilePartViewModel
 
+@{
+    var readOnly = Model.UserName == string.Empty ? false : true;
+}
+
+<fieldset class="form-group" asp-validation-class-for="FullName">
+    <label asp-for="FullName">@T["Full Name"]</label>
+    <input asp-for="FullName" class="form-control content-preview-text content-caption-text" />
+</fieldset>
+
 <fieldset class="form-group" asp-validation-class-for="UserName">
     <label asp-for="UserName">@T["Username"]</label>
-    <input asp-for="UserName" class="form-control content-preview-text content-caption-text" autofocus="autofocus" readonly />
+    <input asp-for="UserName" class="form-control content-preview-text content-caption-text" readonly="@(readOnly)" autofocus="autofocus" />
     <span asp-validation-for="UserName"></span>
-    <span class="hint">@T["Username of linked user."] <a href="@Model.SiteURL/OrchardCore.Users/Admin/Edit/@Model.Id">View User</a></span>
+    @if (Model.Id != 0)
+    {
+        <span class="hint">@T["Username of linked user."] <a href="@Model.SiteURL/OrchardCore.Users/Admin/Edit/@Model.Id">View User</a></span>
+    }
 </fieldset>

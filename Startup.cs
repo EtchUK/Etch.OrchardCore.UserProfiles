@@ -1,10 +1,12 @@
 ﻿using Etch.OrchardCore.UserProfiles.Drivers;
+using Etch.OrchardCore.UserProfiles.Handlers;
 using Etch.OrchardCore.UserProfiles.Indexes;
 using Etch.OrchardCore.UserProfiles.Models;
 using Etch.OrchardCore.UserProfiles.Services;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
+using OrchardCore.ContentManagement.Handlers;
 using OrchardCore.Data.Migration;
 using OrchardCore.Modules;
 using YesSql.Indexes;
@@ -19,6 +21,7 @@ namespace Etch.OrchardCore.UserProfiles
             // Profile Part
             services.AddScoped<IContentPartDisplayDriver, ProfilePartDisplay>();
             services.AddSingleton<ContentPart, ProfilePart>();
+            services.AddScoped<IContentPartHandler, ProfilePartHandler>();
 
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IURLService, URLService>();
@@ -26,6 +29,7 @@ namespace Etch.OrchardCore.UserProfiles
             services.AddSingleton<IIndexProvider, ProfilePartIndexProvider>();
 
             services.AddScoped<IDataMigration, Migrations>();
+
         }
     }
 }
