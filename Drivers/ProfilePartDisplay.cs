@@ -51,8 +51,8 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
 
             return Initialize<ProfilePartViewModel>("ProfilePart_Edit", model =>
             {
-                model.UserName = user.UserName;
-                model.Id = user.Id;
+                model.UserName = (user == null ? string.Empty : user.UserName);
+                model.Id = (user == null ? 0 : user.Id);
                 model.SiteURL = _urlService.GetTenantUrl();
             });
         }
@@ -61,21 +61,20 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
         {
             var model = new ProfilePartViewModel();
 
-            if (!await context.Updater.TryUpdateModelAsync(model, Prefix))
-            {
+            if (!await context.Updater.TryUpdateModelAsync(model, Prefix)) {
                 return await EditAsync(part, context);
             }
 
             var user = await _userService.GetUserAsync(model.UserName);
 
-            if (user != null)
-            {
-                part.UserIdentifier = await _userManager.GetUserIdAsync(user);
+            if (user == null) {
+                user = await _userService.CreateUserAsync(new User { UserName = model.UserName, Email = model.UserName }, null, (key, message) =>
+                {
+                    context.Updater.ModelState.AddModelError("UserName", $"{message}");
+                }) as User;
             }
-            else
-            {
-                context.Updater.ModelState.AddModelError("UserName", $"Unable to find user with matching username: {model.UserName}");
-            }
+
+            part.UserIdentifier = await _userManager.GetUserIdAsync(user);
 
             return await EditAsync(part, context);
         }
