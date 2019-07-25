@@ -1,0 +1,11 @@
+﻿@model Etch.OrchardCore.UserProfiles.GroupField.ViewModels.DisplayProfileGroupFieldViewModel
+@using OrchardCore.Mvc.Utilities
+
+@{
+    var cssSuffix = (Model.PartFieldDefinition.PartDefinition.Name + "-" + Model.PartFieldDefinition.Name).HtmlClassify();
+    var name = Model.PartFieldDefinition.Name;
+}
+
+<div class="field field--type-profilegroup field--name-@cssSuffix">
+    @name - @string.Join(", ", Model.ProfileGroups.Select(x => x.DisplayText))
+</div>

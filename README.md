@@ -21,6 +21,10 @@ By default when enabling the module a new "Profile" content type will be defined
 
 When enabled this feature will make a new "ProfileGroup" part available. When attached to a content type the content item can manage a list of profiles. Profiles can only be associated to a single profile group.
 
+### Profile Group Field
+
+This feature adds a new field which allows the editor to pick from content items with `ProfileGroupPart`.
+
 ### Subscriptions
 
 When enabled this feature will make two new parts available "SubscriptionLevelPart" and "SubscriptionAccessPart".   
