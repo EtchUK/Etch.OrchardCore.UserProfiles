@@ -10,7 +10,7 @@
 <fieldset class="form-group">
     <label asp-for="ProfileGroupContentItemIds">@Model.PartFieldDefinition.DisplayName()</label>
     <select asp-for="ProfileGroupContentItemIds" class="form-control content-preview-select">
-        <option value="">@T["None"]</option>
+        <option value="">@if (settings.Required) {@T["Please select"]} else {@T["None"]}</option>
         @foreach (var option in Model.PossibleProfileGroupOptions)
         {
             <option value="@option.ContentItemId">@option.DisplayText</option>

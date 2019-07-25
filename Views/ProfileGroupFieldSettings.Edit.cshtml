@@ -7,3 +7,11 @@
         <span class="hint">@T["The hint text to display for this field on the editor."]</span>
     </div>
 </fieldset>
+
+<div class="form-group">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" asp-for="Required" checked="@Model.Required">
+        <label class="custom-control-label" asp-for="Required">@T["Required"]</label>
+        <span class="hint">@T["If enabled the editor cannot select 'None' as an option."]</span>
+    </div>
+</div>
