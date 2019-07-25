@@ -5,10 +5,7 @@
     var readOnly = Model.UserName == string.Empty ? false : true;
 }
 
-<fieldset class="form-group" asp-validation-class-for="FullName">
-    <label asp-for="FullName">@T["Full Name"]</label>
-    <input asp-for="FullName" class="form-control content-preview-text content-caption-text" />
-</fieldset>
+<p class="small"><strong>Note:</strong> Creating a profile would also creates a user on Orchard.</p>
 
 <fieldset class="form-group" asp-validation-class-for="UserName">
     <label asp-for="UserName">@T["Username"]</label>

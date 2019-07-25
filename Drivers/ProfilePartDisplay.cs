@@ -54,7 +54,6 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
                 model.UserName = (user == null ? string.Empty : user.UserName);
                 model.Id = (user == null ? 0 : user.Id);
                 model.SiteURL = _urlService.GetTenantUrl();
-                model.FullName = part.FullName;
             });
         }
 
@@ -76,7 +75,6 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
             }
 
             part.UserIdentifier = await _userManager.GetUserIdAsync(user);
-            part.FullName = model.FullName;
 
             return await EditAsync(part, context);
         }
