@@ -34,6 +34,14 @@ using OrchardCore.Modules.Manifest;
 )]
 
 [assembly: Feature(
+    Id = Constants.Features.GroupOwnership,
+    Name = "Profile Group Ownership",
+    Category = "Users",
+    Description = "Adds ownership of content by Profile Groups, including optional access restriction.",
+    Dependencies = new string[] { "OrchardCore.ContentFields", Constants.Features.Grouping, Constants.Features.GroupField }
+)]
+
+[assembly: Feature(
     Id = Constants.Features.Subscriptions,
     Name = "Subscriptions",
     Category = "Users",
