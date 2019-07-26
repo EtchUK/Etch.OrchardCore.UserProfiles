@@ -1,0 +1,9 @@
+﻿@model Etch.OrchardCore.UserProfiles.GroupOwnership.ViewModels.ProfileGroupOwnershipPartSettingsViewModel
+
+<div class="form-group">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" asp-for="RestrictAccess" checked="@Model.RestrictAccess">
+        <label class="custom-control-label" asp-for="RestrictAccess">@T["Restrict access"]</label>
+        <span class="hint">@T["If enabled access to the item is restricted to members of the profile group selected."]</span>
+    </div>
+</div>
