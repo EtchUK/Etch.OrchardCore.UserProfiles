@@ -25,6 +25,16 @@ When enabled this feature will make a new "ProfileGroup" part available. When at
 
 This feature adds a new field which allows the editor to pick from content items with `ProfileGroupPart`.
 
+### Profile Group Ownership
+
+This feature adds the ability for Profile Groups to own Content Items through `ProfileGroupOwnershipPart` which uses a `ProfileGroupField` as `OwnedByGroup` to manage this relationship.
+
+It has settings which allow configuration at the Type level for access restriction features with 3 different settings:
+
+- None: no access restriction
+- Type: all items of this type will check that the user belongs to the group(s) specified
+- Item: adds a checkbox for the editor on the item to enabled/disable access restriction
+
 ### Subscriptions
 
 When enabled this feature will make two new parts available "SubscriptionLevelPart" and "SubscriptionAccessPart".   
