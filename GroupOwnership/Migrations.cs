@@ -1,4 +1,5 @@
-﻿using Etch.OrchardCore.UserProfiles.GroupOwnership.Models;
+﻿using Etch.OrchardCore.UserProfiles.GroupField.Models;
+using Etch.OrchardCore.UserProfiles.GroupOwnership.Models;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Data.Migration;
@@ -30,8 +31,8 @@ namespace Etch.OrchardCore.UserProfiles.GroupOwnership
                 .Attachable()
                 .WithDisplayName("Profile Group Ownership")
                 .WithDescription("Add ability to assign ownership to a Profile Group, optionally restricting access.")
-                .WithField("OwnedByGroup", field => field
-                    .OfType("ProfileGroupField")
+                .WithField(GroupOwnershipConstants.GroupFieldName, field => field
+                    .OfType(nameof(ProfileGroupField))
                     .WithDisplayName("Owned by group")
                     .WithDescription("Specifies which group owns the current content")
                     .WithSetting("Hint", "Which group owns this content")

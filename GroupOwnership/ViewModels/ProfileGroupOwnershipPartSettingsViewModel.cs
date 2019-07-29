@@ -1,7 +1,9 @@
-﻿namespace Etch.OrchardCore.UserProfiles.GroupOwnership.ViewModels
+﻿using Etch.OrchardCore.UserProfiles.GroupOwnership.Models;
+
+namespace Etch.OrchardCore.UserProfiles.GroupOwnership.ViewModels
 {
     public class ProfileGroupOwnershipPartSettingsViewModel
     {
-        public bool RestrictAccess { get; set; }
+        public RestrictAccess RestrictAccess { get; set; }
     }
 }

@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Etch.OrchardCore.UserProfiles.GroupOwnership.Models
+﻿namespace Etch.OrchardCore.UserProfiles.GroupOwnership.Models
 {
     public class ProfileGroupOwnershipPartSettings
     {
-        public bool RestrictAccess { get; set; }
+        public RestrictAccess RestrictAccess { get; set; }
+    }
+
+    public enum RestrictAccess
+    {
+        None = 0,
+        ForType = 1,
+        SetPerItem = 2
     }
 }
