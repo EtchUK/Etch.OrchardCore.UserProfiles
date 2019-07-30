@@ -43,6 +43,12 @@ namespace Etch.OrchardCore.UserProfiles.GroupOwnership.Services
 
         public async Task<bool> CanViewContentAsync(ClaimsPrincipal userPrincipal, IList<string> requiredGroupIds)
         {
+            // Return false if no user
+            if (userPrincipal == null)
+            {
+                return false;
+            }
+
             // The content item doesn't have any group ownership so it's viewable to everyone.
             if (requiredGroupIds == null || !requiredGroupIds.Any())
             {

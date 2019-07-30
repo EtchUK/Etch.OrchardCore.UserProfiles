@@ -1,4 +1,5 @@
 ﻿using Etch.OrchardCore.UserProfiles.GroupField.Models;
+using Etch.OrchardCore.UserProfiles.GroupOwnership.Indexes;
 using Etch.OrchardCore.UserProfiles.GroupOwnership.Models;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
@@ -39,6 +40,14 @@ namespace Etch.OrchardCore.UserProfiles.GroupOwnership
                     .WithSetting("Required", "false")
                     .WithSetting("DisplayMode", "Zero")
                 ));
+
+            SchemaBuilder.CreateMapIndexTable(nameof(GroupOwnershipIndex), table => table
+                .Column<string>(nameof(GroupOwnershipIndex.GroupContentItemId), c => c.WithLength(26))
+            );
+
+            SchemaBuilder.AlterTable(nameof(GroupOwnershipIndex), table => table
+                .CreateIndex($"IDX_{nameof(GroupOwnershipIndex)}_{nameof(GroupOwnershipIndex.GroupContentItemId)}", nameof(GroupOwnershipIndex.GroupContentItemId))
+            );
 
             return 1;
         }
