@@ -2,9 +2,11 @@
 using Etch.OrchardCore.UserProfiles.GroupField.ViewModels;
 using Etch.OrchardCore.UserProfiles.Grouping.Services;
 using Microsoft.Extensions.Localization;
+using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.ContentManagement.Metadata.Models;
+using OrchardCore.ContentManagement.Records;
 using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
 using System;
@@ -12,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using YesSql;
+using YesSql.Services;
 
 namespace Etch.OrchardCore.UserProfiles.GroupField.Drivers
 {
@@ -99,6 +102,10 @@ namespace Etch.OrchardCore.UserProfiles.GroupField.Drivers
             if (await updater.TryUpdateModelAsync(model, Prefix, m => m.ProfileGroupContentItemIds))
             {
                 field.ProfileGroupContentItemIds = SplitIds(model.ProfileGroupContentItemIds);
+                var groupItems = await _session.Query<ContentItem>()
+                    .With<ContentItemIndex>(x => x.ContentItemId.IsIn(field.ProfileGroupContentItemIds) && x.Latest)
+                    .ListAsync();
+                field.ProfileGroupNames = string.Join(", ", groupItems.Select(x => x.DisplayText));
             }
 
             var settings = context.PartFieldDefinition.Settings.ToObject<ProfileGroupFieldSettings>();
