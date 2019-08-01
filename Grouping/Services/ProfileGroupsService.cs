@@ -1,13 +1,14 @@
 ﻿
+using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
+using Etch.OrchardCore.UserProfiles.Grouping.Models;
+using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
+using Microsoft.Extensions.DependencyInjection;
+using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement.Records;
+using OrchardCore.Environment.Shell;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
-using Etch.OrchardCore.UserProfiles.Grouping.Models;
-using Etch.OrchardCore.UserProfiles.Indexes;
-using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
-using OrchardCore.ContentManagement;
-using OrchardCore.ContentManagement.Records;
 using YesSql;
 using YesSql.Services;
 
@@ -16,17 +17,19 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
     public class ProfileGroupsService : IProfileGroupsService {
 
         #region Dependencies
-
-        private readonly IContentManager _contentManager;
+        
         private readonly ISession _session;
+        private readonly IShellHost _shellHost;
+        private readonly ShellSettings _shellSettings;
 
         #endregion
 
         #region Constructor
 
-        public ProfileGroupsService(IContentManager contentManager, ISession session) {
-            _contentManager = contentManager;
+        public ProfileGroupsService(ISession session, IShellHost shellHost, ShellSettings shellSettings) {
             _session = session;
+            _shellHost = shellHost;
+            _shellSettings = shellSettings;
         }
 
         #endregion
@@ -35,15 +38,20 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
 
         public async Task<ContentItem> AssignGroupAsync(ContentItem profile, string groupContentItemId) {
 
-            profile.Alter<ProfileGroupedPart>(x => x.GroupContentItemId = groupContentItemId);
+            using (var scope = await _shellHost.GetScopeAsync(_shellSettings))
+            {
+                var contentManager = scope.ServiceProvider.GetRequiredService<IContentManager>();
 
-            profile.Apply(nameof(ProfileGroupedPart), profile.As<ProfileGroupedPart>());
-            ContentExtensions.Apply(profile, profile);
+                profile.Alter<ProfileGroupedPart>(x => x.GroupContentItemId = groupContentItemId);
 
-            await _contentManager.UpdateAsync(profile);
-            await _contentManager.PublishAsync(profile);
+                profile.Apply(nameof(ProfileGroupedPart), profile.As<ProfileGroupedPart>());
+                ContentExtensions.Apply(profile, profile);
 
-            return profile;
+                await contentManager.UpdateAsync(profile);
+                await contentManager.PublishAsync(profile);
+
+                return profile;
+            }
         }
 
         public async Task<IList<ContentItem>> GetAllGroupsAsync() {

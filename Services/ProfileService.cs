@@ -3,9 +3,11 @@ using Etch.OrchardCore.UserProfiles.Models;
 using Microsoft.AspNetCore.Identity;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Records;
+using OrchardCore.Environment.Shell;
 using OrchardCore.Users;
 using YesSql;
 using Etch.OrchardCore.UserProfiles.Indexes;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Etch.OrchardCore.UserProfiles.Services
 {
@@ -13,18 +15,20 @@ namespace Etch.OrchardCore.UserProfiles.Services
     {
         #region Dependencies
 
-        private readonly IContentManager _contentManager;
         private readonly ISession _session;
+        private readonly IShellHost _shellHost;
+        private readonly ShellSettings _shellSettings;
         private readonly UserManager<IUser> _userManager;
 
         #endregion
 
         #region Constructor
 
-        public ProfileService(IContentManager contentManager, ISession session, UserManager<IUser> userManager)
+        public ProfileService(ISession session, IShellHost shellHost, ShellSettings shellSettings, UserManager<IUser> userManager)
         {
-            _contentManager = contentManager;
             _session = session;
+            _shellSettings = shellSettings;
+            _shellHost = shellHost;
             _userManager = userManager;
         }
 
@@ -34,21 +38,25 @@ namespace Etch.OrchardCore.UserProfiles.Services
 
         public async Task<ContentItem> CreateAsync(IUser user)
         {
-            var contentItem = await _contentManager.NewAsync(Constants.ContentTypeName);
+            using (var scope = await _shellHost.GetScopeAsync(_shellSettings))
+            {
+                var contentManager = scope.ServiceProvider.GetRequiredService<IContentManager>();
+                var contentItem = await contentManager.NewAsync(Constants.ContentTypeName);
 
-            var profile = contentItem.As<ProfilePart>();
-            profile.UserIdentifier = await _userManager.GetUserIdAsync(user);
-            profile.Apply();
+                var profile = contentItem.As<ProfilePart>();
+                profile.UserIdentifier = await _userManager.GetUserIdAsync(user);
+                profile.Apply();
 
-            contentItem.DisplayText = user.UserName;
+                contentItem.DisplayText = user.UserName;
 
-            contentItem.Apply(nameof(ProfilePart), profile);
-            ContentExtensions.Apply(contentItem, contentItem);
+                contentItem.Apply(nameof(ProfilePart), profile);
+                ContentExtensions.Apply(contentItem, contentItem);
 
-            await _contentManager.CreateAsync(contentItem);
-            await _contentManager.PublishAsync(contentItem);
+                await contentManager.CreateAsync(contentItem);
+                await contentManager.PublishAsync(contentItem);
 
-            return contentItem;
+                return contentItem;
+            }
         }
 
         public async Task<ContentItem> GetAsync(IUser user)
