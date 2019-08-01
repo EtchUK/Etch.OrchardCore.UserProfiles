@@ -1,7 +1,9 @@
-﻿namespace Etch.OrchardCore.UserProfiles.SubscriptionGroups.Models
+﻿using OrchardCore.ContentManagement;
+
+namespace Etch.OrchardCore.UserProfiles.SubscriptionGroups.Models
 {
-    public class SubscriptionGroupAccessPart : ISubscriptionGroupContentPart
+    public class SubscriptionGroupAccessPart : ContentPart
     {
-        
+        public SubscriptionGroupPart[] SubscriptionGroupSelection { get; set; }
     }
 }

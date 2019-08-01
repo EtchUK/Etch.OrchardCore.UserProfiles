@@ -8,7 +8,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionGroups.Services
     {
         #region Implementations
 
-        public SubscriptionGroupPart[] SelectedSubscriptionGroupParts(List<SubscriptionGroupPart> subscriptionGroups, ISubscriptionGroupContentPart part)
+        public SubscriptionGroupPart[] SelectedSubscriptionGroupParts(List<SubscriptionGroupPart> subscriptionGroups, SubscriptionGroupAccessPart part)
         {
             return subscriptionGroups.Select(x => new SubscriptionGroupPart
             {
@@ -18,7 +18,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionGroups.Services
             }).ToArray();
         }
 
-        private bool IsSelectedSubscriptionGroupPart(SubscriptionGroupPart subscriptionGroupPart, ISubscriptionGroupContentPart part)
+        private bool IsSelectedSubscriptionGroupPart(SubscriptionGroupPart subscriptionGroupPart, SubscriptionGroupAccessPart part)
         {
             if (part.SubscriptionGroupSelection == null) {
                 return false;
@@ -32,6 +32,6 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionGroups.Services
 
     public interface ISubscriptionGroupPartService
     {
-        SubscriptionGroupPart[] SelectedSubscriptionGroupParts(List<SubscriptionGroupPart> subscriptions, ISubscriptionGroupContentPart part);
+        SubscriptionGroupPart[] SelectedSubscriptionGroupParts(List<SubscriptionGroupPart> subscriptions, SubscriptionGroupAccessPart part);
     }
 }
