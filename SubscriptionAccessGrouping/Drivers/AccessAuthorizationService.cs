@@ -3,9 +3,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Etch.OrchardCore.UserProfiles.Grouping.Services;
 using Etch.OrchardCore.UserProfiles.Services;
+using Etch.OrchardCore.UserProfiles.SubscriptionGroups.Models;
+using Etch.OrchardCore.UserProfiles.SubscriptionGroups.Services;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Services;
 using Microsoft.AspNetCore.Authorization;
+using OrchardCore.ContentManagement;
 using OrchardCore.Users.Services;
 using Permissions = OrchardCore.Contents.Permissions;
 
@@ -20,18 +23,20 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
         private readonly IProfileGroupsService _profileGroupsService;
         private readonly IProfileService _profileService;
         private readonly ISubscriptionLevelService _subscriptionLevelService;
+        private readonly ISubscriptionGroupsService _subscriptionGroupsService;
         private readonly IUserService _userService;
 
         #endregion
 
         #region Constructor
 
-        public AccessAuthorizationService(IAuthorizationService authorizationService, IProfileGroupsService profileGroupsService, IProfileService profileService, ISubscriptionLevelService subscriptionLevelService, IUserService userService)
+        public AccessAuthorizationService(IAuthorizationService authorizationService, IProfileGroupsService profileGroupsService, IProfileService profileService, ISubscriptionLevelService subscriptionLevelService, ISubscriptionGroupsService subscriptionGroupsService, IUserService userService)
         {
             _authorizationService = authorizationService;
             _profileGroupsService = profileGroupsService;
             _profileService = profileService;
             _subscriptionLevelService = subscriptionLevelService;
+            _subscriptionGroupsService = subscriptionGroupsService;
             _userService = userService;
         }
 
@@ -76,6 +81,29 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 
             var allowMultiple = _subscriptionLevelService.GetSettings(group).Multiple;
 
+            // Check if we use Subscription Group Access
+            var profileSubscriptionGroupAccess = profile.ContentItem.As<SubscriptionGroupAccessPart>();
+            if (profileSubscriptionGroupAccess != null) {
+                var subscriptionGroups = await _subscriptionGroupsService.GetAsync(group, allowMultiple);
+
+                // If use has access to group
+                if(profileSubscriptionGroupAccess.SubscriptionGroupSelection.Any(x => x.IsSelected && subscriptionGroups.Any(y => y.Identifier == x.Identifier))) {
+
+                    return HasAccessToSubscriptionLevel(subscriptionAccessSelection, group, allowMultiple);
+                }
+
+                return false;
+            }
+
+            return HasAccessToSubscriptionLevel(subscriptionAccessSelection, group, allowMultiple);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private bool HasAccessToSubscriptionLevel(SubscriptionPart[] subscriptionAccessSelection, SubscriptionLevelPart group, bool allowMultiple)
+        {
             // Check subsciption on single subscription level
             if (!allowMultiple && !subscriptionAccessSelection.Any(x => x.Identifier == group.Subscription)) {
                 return false;

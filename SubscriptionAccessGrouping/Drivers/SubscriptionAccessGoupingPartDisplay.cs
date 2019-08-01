@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.DisplayManagement.Views;
-using OrchardCore.Environment.Shell;
 
 namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 {

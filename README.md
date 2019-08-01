@@ -1,4 +1,4 @@
-# Etch.OrchardCore.UserProfiles
+﻿# Etch.OrchardCore.UserProfiles
 
 Module for [Orchard Core](https://github.com/OrchardCMS/OrchardCore) that maps users to a profile content type. This enables content parts/fields to be defined for a user via their profile.
 
@@ -44,4 +44,9 @@ Attaching the "SubscriptionAccessPart" to a content type allows content editors 
 ### Subscription Access Profile Groups
 
 When enabled this feature will extend the subscriptions module to manage access to content items based on grouping subscription.
+
+### Subscription Groups
+
+When enabled this feature will extend the subscriptions module to allow assign subscription to subscription group.
+This will then allow to add the groups to the user profile and limit the access to the content type by subscription group.
 

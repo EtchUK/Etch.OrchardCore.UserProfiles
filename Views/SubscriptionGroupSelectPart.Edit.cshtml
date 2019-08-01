@@ -1,0 +1,14 @@
+﻿@using Etch.OrchardCore.UserProfiles.SubscriptionGroups.ViewModels;
+
+@model SubscriptionGroupSelectPartViewModel
+
+<h5>@T["Subscription Groups"]</h5>
+
+<fieldset class="form-group">
+    <select asp-for="SubscriptionGroup" class="form-control">
+        @for (var i = 0; i < Model.SubscriptionGroups.Count; i++)
+        {
+        <option value="@Model.SubscriptionGroups[i].Identifier">@Model.SubscriptionGroups[i].ContentItem.DisplayText</option>
+        }
+    </select>
+</fieldset>

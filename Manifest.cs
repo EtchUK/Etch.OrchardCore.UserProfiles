@@ -50,6 +50,14 @@ using OrchardCore.Modules.Manifest;
 )]
 
 [assembly: Feature(
+    Id = Constants.Features.SubscriptionGroups,
+    Name = "Subscription Groups",
+    Category = "Users",
+    Description = "Manage group of subscriptions.",
+    Dependencies = new string[] { "OrchardCore.ContentFields" }
+)]
+
+[assembly: Feature(
     Id = Constants.Features.SubscriptionAccessGrouping,
     Name = "Subscription Access Profile Groups",
     Category = "Users",

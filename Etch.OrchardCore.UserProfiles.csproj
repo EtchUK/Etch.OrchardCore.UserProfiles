@@ -27,6 +27,13 @@
     <PackageReference Include="OrchardCore.Users.Abstractions" Version="1.0.0-beta3-71077" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SubscriptionGroups\" />
+    <Folder Include="SubscriptionGroups\Models\" />
+    <Folder Include="SubscriptionGroups\ViewModels\" />
+    <Folder Include="SubscriptionGroups\Drivers\" />
+    <Folder Include="SubscriptionGroups\Services\" />
+  </ItemGroup>
   <Target Name="BuildStaticAssetsForRelease" BeforeTargets="BeforeBuild" Condition="'$(Configuration)' == 'Release'">
     <Exec Command="npm install" />
     <Exec Command="npm run build" />

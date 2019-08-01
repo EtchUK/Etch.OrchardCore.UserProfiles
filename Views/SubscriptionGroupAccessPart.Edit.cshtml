@@ -1,0 +1,21 @@
+﻿@using Etch.OrchardCore.UserProfiles.SubscriptionGroups.ViewModels;
+
+@model SubscriptionGroupAccessPartViewModel
+
+<hr />
+<h5>@T["Subscription Group Access"] <span class="hint">@T["— This permission only applies if the profile group has subscription from this group."]</span></h5>
+<fieldset class="form-group">
+
+    <div class="row">
+        @for (var i = 0; i < Model.SubscriptionGroupSelection.Length; i++)
+        {
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+            <div class="custom-control custom-checkbox">
+                <input asp-for="@Model.SubscriptionGroupSelection[i].IsSelected" type="checkbox" class="custom-control-input">
+                <input type="hidden" asp-for="@Model.SubscriptionGroupSelection[i].Identifier" />
+                <label class="custom-control-label" asp-for="@Model.SubscriptionGroupSelection[i].IsSelected">@Model.SubscriptionGroupSelection[i].ContentItem.DisplayText</label>
+            </div>
+        </div>
+        }
+    </div>
+</fieldset>

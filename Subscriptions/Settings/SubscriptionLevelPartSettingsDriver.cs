@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using Etch.OrchardCore.UserProfiles.Subscriptions.ViewModels;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentTypes.Editors;
@@ -15,6 +17,11 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Settings
 
         public override IDisplayResult Edit(ContentTypePartDefinition contentTypePartDefinition, IUpdateModel updater)
         {
+            // Only show this setting on SubscriptionLevelPart
+            if (!string.Equals(nameof(SubscriptionLevelPart), contentTypePartDefinition.PartDefinition.Name, StringComparison.Ordinal)) {
+                return null;
+            }
+
             return Initialize<EditSubscriptionLevelPartSettingsViewModel>("SubscriptionLevelPartSettings_Edit", model =>
             {
                 var settings = contentTypePartDefinition.Settings.ToObject<SubscriptionLevelPartSettings>();

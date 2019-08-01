@@ -1,0 +1,9 @@
+﻿@using Etch.OrchardCore.UserProfiles.SubscriptionGroups.ViewModels;
+
+@model SubscriptionGroupPartEditViewModel
+
+<fieldset class="form-group" asp-validation-class-for="Identifier">
+    <label asp-for="Identifier">@T["Identifier"] <span asp-validation-for="Identifier"></span></label>
+    <input asp-for="Identifier" class="form-control content-preview-text content-caption-text" />
+    <span class="hint">@T["Custom identifier for subscription group"]</span>
+</fieldset>

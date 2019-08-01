@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Services;
 using Etch.OrchardCore.UserProfiles.Subscriptions.ViewModels;
