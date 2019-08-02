@@ -1,5 +1,6 @@
 ﻿using Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers;
 using Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Services;
+using Etch.OrchardCore.UserProfiles.SubscriptionGroups.Services;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.DisplayManagement.Handlers;
@@ -24,6 +25,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping
             services.AddScoped<ISubscriptionAccessSettingsService, SubscriptionAccessSettingsService>();
             services.AddScoped<IAccessAuthorizationService, AccessAuthorizationService>();
             services.AddScoped<IContentPartDisplayDriver, SubscriptionAccessGoupingPartDisplay>();
+            services.AddScoped<ISubscriptionGroupsService, SubscriptionGroupsService>();
         }
     }
 }
