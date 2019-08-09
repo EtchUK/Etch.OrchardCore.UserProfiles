@@ -37,7 +37,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
 
         public async Task<ContentItem> AssignGroupAsync(ContentItem profile, string groupContentItemId) {
 
-            if(profile == null) {
+            if (profile == null) {
                 return null;
             }
 
