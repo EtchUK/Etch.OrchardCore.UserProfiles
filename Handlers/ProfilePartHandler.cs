@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Etch.OrchardCore.UserProfiles.Grouping.Services;
 using Etch.OrchardCore.UserProfiles.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,7 @@ namespace Etch.OrchardCore.UserProfiles.Handlers
 
         private readonly IAuthorizationService _authorizationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IProfileGroupsService _profileGroupsService;
         private readonly UserManager<IUser> _userManager;
         private readonly IUserService _userService;
 
@@ -23,12 +25,13 @@ namespace Etch.OrchardCore.UserProfiles.Handlers
 
         #region Constructor
 
-        public ProfilePartHandler(IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor, UserManager<IUser> userManager, IUserService userService)
+        public ProfilePartHandler(IAuthorizationService authorizationService, IHttpContextAccessor httpContextAccessor, IProfileGroupsService profileGroupsService, UserManager<IUser> userManager, IUserService userService)
         {
             _authorizationService = authorizationService;
+            _httpContextAccessor = httpContextAccessor;
+            _profileGroupsService = profileGroupsService;
             _userManager = userManager;
             _userService = userService;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         #endregion
@@ -41,6 +44,8 @@ namespace Etch.OrchardCore.UserProfiles.Handlers
             if (!await _authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext?.User, Permissions.ManageUsers)) {
                 return;
             }
+
+            await _profileGroupsService.AssignGroupAsync(part.ContentItem, null);
 
             var user = await _userService.GetUserByUniqueIdAsync(part.UserIdentifier);
 

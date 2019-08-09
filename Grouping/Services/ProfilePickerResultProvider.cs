@@ -24,7 +24,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
         public async Task<IEnumerable<ContentPickerResult>> Search(ContentPickerSearchContext searchContext)
         {
             var query = _session.Query<ContentItem, ContentItemIndex>()
-                .With<ContentItemIndex>(x => x.ContentType.IsIn(searchContext.ContentTypes) && x.Latest);
+                .With<ContentItemIndex>(x => x.ContentType.IsIn(searchContext.ContentTypes) && x.Published && x.Latest);
 
             if (!string.IsNullOrEmpty(searchContext.Query))
             {

@@ -1,5 +1,4 @@
-﻿
-using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
+﻿using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
 using Etch.OrchardCore.UserProfiles.Grouping.Models;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +37,10 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
 
         public async Task<ContentItem> AssignGroupAsync(ContentItem profile, string groupContentItemId) {
 
+            if(profile == null) {
+                return null;
+            }
+
             using (var scope = await _shellHost.GetScopeAsync(_shellSettings))
             {
                 var contentManager = scope.ServiceProvider.GetRequiredService<IContentManager>();
@@ -48,10 +51,12 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
                 ContentExtensions.Apply(profile, profile);
 
                 await contentManager.UpdateAsync(profile);
-                await contentManager.PublishAsync(profile);
+
+                await _session.CommitAsync();
 
                 return profile;
             }
+
         }
 
         public async Task<IList<ContentItem>> GetAllGroupsAsync() {
