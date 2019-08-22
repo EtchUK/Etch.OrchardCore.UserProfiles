@@ -82,7 +82,7 @@ namespace Etch.OrchardCore.UserProfiles.Services
             }
 
             var contentItems = await _session.Query<ContentItem>()
-                                      .With<ContentItemIndex>(x => x.Published && x.Latest && x.ContentType == Constants.ContentTypeName)
+                                      .With<ContentItemIndex>(x => x.Published && x.ContentType == Constants.ContentTypeName)
                                       .With<ProfileGroupedPartIndex>(x => x.GroupContentItemId == contentItem.ContentItemId)
                                       .ListAsync();
 
