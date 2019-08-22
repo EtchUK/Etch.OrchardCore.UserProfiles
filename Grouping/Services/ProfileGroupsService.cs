@@ -79,7 +79,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
         {
             var profileGroupedPart = contentItem.As<ProfileGroupedPart>();
 
-            if(profileGroupedPart == null) {
+            if (profileGroupedPart == null) {
                 return null;
             }
 

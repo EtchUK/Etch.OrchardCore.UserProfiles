@@ -1,5 +1,6 @@
 ﻿using OrchardCore.ContentManagement;
 using OrchardCore.Users;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Etch.OrchardCore.UserProfiles.Services
@@ -8,5 +9,6 @@ namespace Etch.OrchardCore.UserProfiles.Services
     {
         Task<ContentItem> CreateAsync(IUser user);
         Task<ContentItem> GetAsync(IUser user);
+        Task<IList<ContentItem>> GetAllByGroupAsync(ContentItem contentItem);
     }
 }

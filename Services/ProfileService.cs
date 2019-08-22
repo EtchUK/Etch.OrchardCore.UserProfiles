@@ -1,13 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
+using Etch.OrchardCore.UserProfiles.Indexes;
 using Etch.OrchardCore.UserProfiles.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Records;
 using OrchardCore.Environment.Shell;
 using OrchardCore.Users;
 using YesSql;
-using Etch.OrchardCore.UserProfiles.Indexes;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Etch.OrchardCore.UserProfiles.Services
 {
@@ -69,6 +72,21 @@ namespace Etch.OrchardCore.UserProfiles.Services
                                       .FirstOrDefaultAsync();
 
             return contentItems;
+        }
+
+        public async Task<IList<ContentItem>> GetAllByGroupAsync(ContentItem contentItem)
+        {
+
+            if (contentItem == null) {
+                return null;
+            }
+
+            var contentItems = await _session.Query<ContentItem>()
+                                      .With<ContentItemIndex>(x => x.Published && x.Latest && x.ContentType == Constants.ContentTypeName)
+                                      .With<ProfileGroupedPartIndex>(x => x.GroupContentItemId == contentItem.ContentItemId)
+                                      .ListAsync();
+
+            return contentItems.ToList();
         }
 
         #endregion
