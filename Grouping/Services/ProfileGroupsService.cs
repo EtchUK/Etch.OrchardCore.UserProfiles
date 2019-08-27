@@ -51,6 +51,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
                 ContentExtensions.Apply(profile, profile);
 
                 await contentManager.UpdateAsync(profile);
+                await contentManager.PublishAsync(profile);
 
                 await _session.CommitAsync();
 
