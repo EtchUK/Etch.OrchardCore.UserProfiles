@@ -81,19 +81,19 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./Assets/Grouping/js/profilePicker.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./Assets/GroupField/js/profileGroupPicker.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./Assets/Grouping/js/profilePicker.js":
-/*!*********************************************!*\
-  !*** ./Assets/Grouping/js/profilePicker.js ***!
-  \*********************************************/
+/***/ "./Assets/GroupField/js/profileGroupPicker.js":
+/*!****************************************************!*\
+  !*** ./Assets/GroupField/js/profileGroupPicker.js ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("﻿window.initializeProfilePicker = function (\r\n  elementId,\r\n  selectedItems,\r\n  tenantPath,\r\n  searchPath\r\n) {\r\n  var vueMultiselect = Vue.component(\r\n    \"vue-multiselect\",\r\n    window.VueMultiselect.default\r\n  );\r\n\r\n  searchPath = searchPath || 'ProfilePicker';\r\n\r\n  new Vue({\r\n    el: \"#\" + elementId,\r\n    components: { \"vue-multiselect\": vueMultiselect },\r\n    data: {\r\n      value: null,\r\n      arrayOfItems: selectedItems,\r\n      options: []\r\n    },\r\n    computed: {\r\n      selectedIds: function () {\r\n        return this.arrayOfItems\r\n          .map(function (x) {\r\n            return x.contentItemId;\r\n          })\r\n          .join(\",\");\r\n      },\r\n      isDisabled: function () {\r\n        return false;\r\n      }\r\n    },\r\n    watch: {\r\n      selectedIds: function () {\r\n        // We add a delay to allow for the <input> to get the actual value\r\n        // before the form is submitted\r\n        setTimeout(function () {\r\n          $(document).trigger(\"contentpreview:render\");\r\n        }, 100);\r\n      }\r\n    },\r\n    created: function () {\r\n      var self = this;\r\n      self.asyncFind();\r\n    },\r\n    methods: {\r\n      asyncFind: function (query) {\r\n        var self = this;\r\n        self.isLoading = true;\r\n        var searchUrl = tenantPath + '/' + searchPath;\r\n\r\n        if (query) {\r\n          searchUrl += \"&query=\" + query;\r\n        }\r\n\r\n        fetch(searchUrl).then(function (res) {\r\n          res.json().then(function (json) {\r\n            self.options = json;\r\n            self.isLoading = false;\r\n          });\r\n        });\r\n      },\r\n      onSelect: function (selectedOption, id) {\r\n        var self = this;\r\n\r\n        for (i = 0; i < self.arrayOfItems.length; i++) {\r\n          if (\r\n            self.arrayOfItems[i].contentItemId === selectedOption.contentItemId\r\n          ) {\r\n            return;\r\n          }\r\n        }\r\n\r\n        self.arrayOfItems.push(selectedOption);\r\n      },\r\n      remove: function (item) {\r\n        this.arrayOfItems.splice(this.arrayOfItems.indexOf(item), 1);\r\n      }\r\n    }\r\n  });\r\n};\r\n\n\n//# sourceURL=webpack:///./Assets/Grouping/js/profilePicker.js?");
+eval("window.initializeProfileGroupPicker = function(\r\n    elementId,\r\n    selectedItems,\r\n    tenantPath,\r\n    multiple\r\n  ) {\r\n    window.initializeProfilePicker(elementId, selectedItems, tenantPath, multiple, 'ProfileGroupPicker');\r\n  };\r\n  \n\n//# sourceURL=webpack:///./Assets/GroupField/js/profileGroupPicker.js?");
 
 /***/ })
 

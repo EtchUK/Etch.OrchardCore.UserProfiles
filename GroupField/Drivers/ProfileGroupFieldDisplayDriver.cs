@@ -53,6 +53,11 @@ namespace Etch.OrchardCore.UserProfiles.GroupField.Drivers
 
         public override IDisplayResult Display(ProfileGroupField field, BuildFieldDisplayContext context)
         {
+            if ("None".Equals(context.PartFieldDefinition.DisplayMode(), StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+
             return Initialize<DisplayProfileGroupFieldViewModel>(GetDisplayShapeType(context), model =>
             {
                 model.Field = field;
@@ -69,14 +74,12 @@ namespace Etch.OrchardCore.UserProfiles.GroupField.Drivers
 
         #region Edit
 
-        public override IDisplayResult Edit(ProfileGroupField field, BuildFieldEditorContext context)
+        public override async Task<IDisplayResult> EditAsync(ProfileGroupField field, BuildFieldEditorContext context)
         {
-            if ("None".Equals(context.PartFieldDefinition.DisplayMode(), StringComparison.OrdinalIgnoreCase))
-            {
-                return null;
-            }
-
-            var groups = _profileGroupsService.GetAllGroupsAsync().Result;
+            var groups = (await _session.Query<ContentItem>()
+                .With<ContentItemIndex>(x => x.ContentItemId.IsIn(field.ProfileGroupContentItemIds) && (x.Published || x.Latest))
+                .ListAsync())
+                .ToList();
 
             return Initialize<EditProfileGroupFieldViewModel>(GetEditorShapeType(context), model =>
             {
@@ -84,14 +87,8 @@ namespace Etch.OrchardCore.UserProfiles.GroupField.Drivers
                 model.Part = context.ContentPart;
                 model.PartFieldDefinition = context.PartFieldDefinition;
 
+                model.Items = groups;
                 model.ProfileGroupContentItemIds = JoinIds(field.ProfileGroupContentItemIds);
-                model.PossibleProfileGroupOptions = groups.Select(g => new ProfileGroupOption
-                {
-                    ContentItemId = g.ContentItemId,
-                    DisplayText = g.DisplayText
-                })
-                .OrderBy(x => x.DisplayText)
-                .ToList();
             });
         }
 
@@ -103,7 +100,7 @@ namespace Etch.OrchardCore.UserProfiles.GroupField.Drivers
             {
                 field.ProfileGroupContentItemIds = SplitIds(model.ProfileGroupContentItemIds);
                 var groupItems = await _session.Query<ContentItem>()
-                    .With<ContentItemIndex>(x => x.ContentItemId.IsIn(field.ProfileGroupContentItemIds) && x.Latest)
+                    .With<ContentItemIndex>(x => x.ContentItemId.IsIn(field.ProfileGroupContentItemIds) && (x.Published || x.Latest))
                     .ListAsync();
                 field.ProfileGroupNames = string.Join(", ", groupItems.Select(x => x.DisplayText));
             }
@@ -113,8 +110,12 @@ namespace Etch.OrchardCore.UserProfiles.GroupField.Drivers
             {
                 updater.ModelState.AddModelError(Prefix, T["{0} is required.", context.PartFieldDefinition.DisplayName()]);
             }
+            if (!settings.Multiple && field.ProfileGroupContentItemIds.Count > 1)
+            {
+                updater.ModelState.AddModelError(Prefix, T["{0} should only have a single item selected, please remove items.", context.PartFieldDefinition.DisplayName()]);
+            }
 
-            return Edit(field, context);
+            return await EditAsync(field, context);
         }
 
         #endregion Edit

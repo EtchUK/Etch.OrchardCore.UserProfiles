@@ -10,7 +10,15 @@
 
 <div class="form-group">
     <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" asp-for="Required" checked="@Model.Required">
+        <input type="checkbox" class="custom-control-input" asp-for="Multiple" @if(Model.Multiple){<text>checked</text>} />
+        <label class="custom-control-label" asp-for="Multiple">@T["Multiple"]</label>
+        <span class="hint">@T["If enabled the editor can select multiple items."]</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" asp-for="Required" @if(Model.Required){<text>checked</text>} />
         <label class="custom-control-label" asp-for="Required">@T["Required"]</label>
         <span class="hint">@T["If enabled the editor cannot select 'None' as an option."]</span>
     </div>

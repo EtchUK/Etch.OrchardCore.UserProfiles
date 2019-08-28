@@ -1,11 +1,15 @@
 ﻿using Etch.OrchardCore.UserProfiles.GroupField.Drivers;
 using Etch.OrchardCore.UserProfiles.GroupField.Models;
+using Etch.OrchardCore.UserProfiles.GroupField.Services;
 using Fluid;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentTypes.Editors;
 using OrchardCore.Modules;
+using System;
 
 namespace Etch.OrchardCore.UserProfiles.GroupField
 {
@@ -17,12 +21,24 @@ namespace Etch.OrchardCore.UserProfiles.GroupField
             TemplateContext.GlobalMemberAccessStrategy.Register<ProfileGroupField>();
         }
 
+        public override void Configure(IApplicationBuilder app, IRouteBuilder routes, IServiceProvider serviceProvider)
+        {
+            routes.MapAreaRoute(
+                name: "ProfileGroupPicker",
+                areaName: "Etch.OrchardCore.UserProfiles",
+                template: "ProfileGroupPicker",
+                defaults: new { controller = "ProfileGroupPicker", action = "List" }
+            );
+        }
+
         public override void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ContentField, ProfileGroupField>();
 
             services.AddScoped<IContentFieldDisplayDriver, ProfileGroupFieldDisplayDriver>();
             services.AddScoped<IContentPartFieldDefinitionDisplayDriver, ProfileGroupFieldSettingsDriver>();
+
+            services.AddScoped<IContentPickerResultProvider, ProfileGroupPickerResultProvider>();
         }
     }
 }
