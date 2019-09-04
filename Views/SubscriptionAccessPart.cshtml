@@ -1,0 +1,8 @@
+﻿@using Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.ViewModels;
+
+@model SubscriptionAccessViewModel
+
+@if (!Model.HasAccess)
+{
+    <p>content is exclusively for members.</p>
+}

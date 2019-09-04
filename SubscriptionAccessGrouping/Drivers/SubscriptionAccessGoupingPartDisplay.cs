@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Etch.OrchardCore.UserProfiles.Services;
 using Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Services;
+using Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.ViewModels;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using Microsoft.AspNetCore.Http;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
@@ -37,16 +38,26 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
         public override async Task<IDisplayResult> DisplayAsync(SubscriptionAccessPart part, BuildPartDisplayContext context)
         {
 
+            var canViewContent = await _accessAuthorizationService.CanViewContent(_httpContextAccessor.HttpContext?.User, part.SubscriptionSelection);
+
             // If the request is not a detail page then we allow users to view the content
-            if (context.DisplayType != "Detail") {
+            if (context.DisplayType != "Detail")
+            {
+                return Initialize<SubscriptionAccessViewModel>("SubscriptionAccessPart", model =>
+                {
+                    model.HasAccess = canViewContent;
+                })
+                .Location("Detail", "")
+                .Location("Summary", "AfterContent")
+                .Location("SummaryAdmin", "");
+            }
+
+            if (canViewContent)
+            {
                 return null;
             }
 
             var settings = await _subscriptionAccessSettingsService.GetSettingsAsync();
-
-            if (await _accessAuthorizationService.CanViewContent(_httpContextAccessor.HttpContext?.User, part.SubscriptionSelection)) {
-                return null;
-            }
 
             // If there is no redirect URL has been specified
             // then we redirect users to the root of the website.
