@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OrchardCore.ContentManagement;
 using OrchardCore.Modules;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace Etch.OrchardCore.UserProfiles.Controllers
 {
     [Feature(Constants.Features.Grouping)]
+    [Authorize]
     public class ProfilePickerController : Controller
     {
         #region Dependencies

@@ -53,7 +53,7 @@
         var searchUrl = tenantPath + '/' + searchPath;
 
         if (query) {
-          searchUrl += "&query=" + query;
+          searchUrl += "?query=" + query;
         }
 
         fetch(searchUrl).then(function (res) {
