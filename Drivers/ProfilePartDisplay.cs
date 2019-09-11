@@ -61,13 +61,15 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
         {
             var model = new ProfilePartViewModel();
 
-            if (!await context.Updater.TryUpdateModelAsync(model, Prefix)) {
+            if (!await context.Updater.TryUpdateModelAsync(model, Prefix))
+            {
                 return await EditAsync(part, context);
             }
 
             var user = await _userService.GetUserAsync(model.UserName);
 
-            if (user == null) {
+            if (user == null)
+            {
                 user = await _userService.CreateUserAsync(new User { UserName = model.UserName, Email = model.UserName }, null, (key, message) =>
                 {
                     context.Updater.ModelState.AddModelError("UserName", $"{message}");

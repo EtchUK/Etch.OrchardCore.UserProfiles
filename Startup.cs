@@ -11,6 +11,7 @@ using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Handlers;
 using OrchardCore.Data.Migration;
 using OrchardCore.Modules;
+using OrchardCore.Navigation;
 using YesSql.Indexes;
 
 namespace Etch.OrchardCore.UserProfiles
@@ -36,6 +37,7 @@ namespace Etch.OrchardCore.UserProfiles
 
             services.AddSingleton<IIndexProvider, ProfilePartIndexProvider>();
 
+            services.AddScoped<INavigationProvider, AdminMenu>();
             services.AddScoped<IDataMigration, Migrations>();
 
         }

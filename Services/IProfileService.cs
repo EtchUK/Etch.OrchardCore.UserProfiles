@@ -9,6 +9,7 @@ namespace Etch.OrchardCore.UserProfiles.Services
     {
         Task<ContentItem> CreateAsync(IUser user);
         Task<ContentItem> GetAsync(IUser user);
+        Task<List<ContentItem>> GetAllAsync();
         Task<IList<ContentItem>> GetAllByGroupAsync(ContentItem contentItem);
     }
 }

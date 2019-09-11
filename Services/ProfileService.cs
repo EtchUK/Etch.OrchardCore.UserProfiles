@@ -74,10 +74,20 @@ namespace Etch.OrchardCore.UserProfiles.Services
             return contentItems;
         }
 
+        public async Task<List<ContentItem>> GetAllAsync()
+        {
+            var contentItems = await _session.Query<ContentItem>()
+                                      .With<ContentItemIndex>(x => x.Published && x.ContentType == Constants.ContentTypeName)
+                                      .ListAsync();
+
+            return contentItems.ToList();
+        }
+
         public async Task<IList<ContentItem>> GetAllByGroupAsync(ContentItem contentItem)
         {
 
-            if (contentItem == null) {
+            if (contentItem == null)
+            {
                 return null;
             }
 
