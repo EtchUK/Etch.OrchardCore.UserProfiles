@@ -6,6 +6,7 @@ using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
 using OrchardCore.ContentManagement.Metadata;
+using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
 using System;
 using System.Linq;
@@ -53,7 +54,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Drivers
             });
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(ProfileGroupPart part, BuildPartEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(ProfileGroupPart part, IUpdateModel updater, UpdatePartEditorContext context)
         {
             var model = new ProfileGroupPartViewModel();
 

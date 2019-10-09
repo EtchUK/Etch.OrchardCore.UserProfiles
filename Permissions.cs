@@ -1,5 +1,7 @@
 ﻿using OrchardCore.Security.Permissions;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Etch.OrchardCore.UserProfiles.Profile
 {
@@ -7,9 +9,9 @@ namespace Etch.OrchardCore.UserProfiles.Profile
     {
         public static readonly Permission ManageProfileMigration = new Permission("ManageProfileMigration", "Manage Profile Migration");
 
-        public IEnumerable<Permission> GetPermissions()
+        public Task<IEnumerable<Permission>> GetPermissionsAsync()
         {
-            return new[] { ManageProfileMigration };
+            return Task.FromResult(new[] { ManageProfileMigration }.AsEnumerable());
         }
 
         public IEnumerable<PermissionStereotype> GetDefaultStereotypes()

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
+using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
 using System.Threading.Tasks;
 
@@ -88,7 +89,7 @@ namespace Etch.OrchardCore.UserProfiles.GroupOwnership.Drivers
             });
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(ProfileGroupOwnershipPart part, BuildPartEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(ProfileGroupOwnershipPart part, IUpdateModel updater, UpdatePartEditorContext context)
         {
             var model = new EditProfileGroupOwnershipPartViewModel();
 

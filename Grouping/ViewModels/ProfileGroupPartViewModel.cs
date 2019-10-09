@@ -16,17 +16,17 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.ViewModels
 
         public string ContentItemIds { get; set; }
 
-        public IList<ContentPickerItemViewModel> SelectedItems
+        public IList<VueMultiselectItemViewModel> SelectedItems
         {
             get {
                 if (Items == null)
                 {
-                    return new List<ContentPickerItemViewModel>();
+                    return new List<VueMultiselectItemViewModel>();
                 }
 
-                return Items.Select(x => new ContentPickerItemViewModel
+                return Items.Select(x => new VueMultiselectItemViewModel
                 {
-                    ContentItemId = x.ContentItemId,
+                    Id = x.ContentItemId,
                     DisplayText = x.DisplayText,
                     HasPublished = true
                 }).ToList();

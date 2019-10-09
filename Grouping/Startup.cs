@@ -36,12 +36,11 @@ namespace Etch.OrchardCore.UserProfiles.Grouping
             services.AddScoped<IDataMigration, Migrations>();
         }
 
-        public override void Configure(IApplicationBuilder builder, IRouteBuilder routes, IServiceProvider serviceProvider)
-        {
-            routes.MapAreaRoute(
+        public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider) {
+            routes.MapAreaControllerRoute(
                 name: "ProfilePicker",
                 areaName: "Etch.OrchardCore.UserProfiles",
-                template: "ProfilePicker",
+                pattern: "ProfilePicker",
                 defaults: new { controller = "ProfilePicker", action = "List" }
             );
         }

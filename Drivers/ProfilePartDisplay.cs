@@ -4,6 +4,7 @@ using Etch.OrchardCore.UserProfiles.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
+using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Users;
 using OrchardCore.Users.Models;
@@ -57,7 +58,7 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
             });
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(ProfilePart part, BuildPartEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(ProfilePart part, IUpdateModel updater, UpdatePartEditorContext context)
         {
             var model = new ProfilePartViewModel();
 

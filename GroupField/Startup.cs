@@ -21,12 +21,12 @@ namespace Etch.OrchardCore.UserProfiles.GroupField
             TemplateContext.GlobalMemberAccessStrategy.Register<ProfileGroupField>();
         }
 
-        public override void Configure(IApplicationBuilder app, IRouteBuilder routes, IServiceProvider serviceProvider)
+        public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
-            routes.MapAreaRoute(
+            routes.MapAreaControllerRoute(
                 name: "ProfileGroupPicker",
                 areaName: "Etch.OrchardCore.UserProfiles",
-                template: "ProfileGroupPicker",
+                pattern: "ProfileGroupPicker",
                 defaults: new { controller = "ProfileGroupPicker", action = "List" }
             );
         }
