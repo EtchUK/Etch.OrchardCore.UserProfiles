@@ -38,7 +38,7 @@ namespace Etch.OrchardCore.UserProfiles.Handlers
 
         #region Implementation
 
-        public override async Task RemovedAsync(RemoveContentContext context, ProfilePart part)
+        public override async Task RemovingAsync(RemoveContentContext context, ProfilePart part)
         {
             // Check if the user has permission to delete orchard user
             if (!await _authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext?.User, Permissions.ManageUsers)) {
