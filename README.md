@@ -1,10 +1,11 @@
 ﻿# Etch.OrchardCore.UserProfiles
 
-Module for [Orchard Core](https://github.com/OrchardCMS/OrchardCore) that maps users to a profile content type. This enables content parts/fields to be defined for a user via their profile.
+Module for [Orchard Core](https://github.com/OrchardCMS/OrchardCore) that provides [various features](#features) to aid with extending users functionality within Orchard Core.
 
 ## Build Status
 
-_Internal module that isn't currently publically available._
+[![Build Status](https://secure.travis-ci.org/etchuk/Etch.OrchardCore.UserProfiles.png?branch=master)](http://travis-ci.org/etchuk/Etch.OrchardCore.UserProfiles) [![NuGet](https://img.shields.io/nuget/v/Etch.OrchardCore.UserProfiles.svg)](https://www.nuget.org/packages/Etch.OrchardCore.UserProfiles)
+
 
 ## Orchard Core Reference
 
@@ -15,6 +16,7 @@ This module is referencing the RC1 build of Orchard Core ([`1.0.0-rc1-10004`](ht
 This module is available on our private NuGet feed, search "Etch.OrchardCore.UserProfiles" within NuGet package manager in order to install the module within your Orchard Core site project. Your project must be configured to use our private NuGet feed otherwise no results will be returned.
 
 ## Features
+
 By default when enabling the module a new "Profile" content type will be defined. The current stable version of Orchard Core doesn't have a way to identify when users have been created, however this will be [available in the next release](https://github.com/OrchardCMS/OrchardCore/commit/58045f241c3bc0fb6692ae873fbca340098eb944).
 
 ### Profile Groups
@@ -37,9 +39,7 @@ It has settings which allow configuration at the Type level for access restricti
 
 ### Subscriptions
 
-When enabled this feature will make two new parts available "SubscriptionLevelPart" and "SubscriptionAccessPart".   
-"SubscriptionLevelPart" can be attached to either profile or groups to set a subscription level.   
-Attaching the "SubscriptionAccessPart" to a content type allows content editors to restrict which subscription levels have access to view specific content items.
+When enabled this feature will make two new parts available `SubscriptionLevelPart` and `SubscriptionAccessPart`. `SubscriptionLevelPart` can be attached to either profile or groups to set a subscription level. Attaching the `SubscriptionAccessPart` to a content type allows content editors to restrict which subscription levels have access to view specific content items.
 
 ### Subscription Access Profile Groups
 
