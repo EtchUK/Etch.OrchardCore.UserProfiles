@@ -1,4 +1,6 @@
-﻿using OrchardCore.ContentManagement.Metadata;
+﻿using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
+using Etch.OrchardCore.UserProfiles.Subscriptions.Settings;
+using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Data.Migration;
 
@@ -66,6 +68,13 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions
             );
 
             return 3;
+        }
+
+        public int UpdateFrom3()
+        {
+            _contentDefinitionManager.MigratePartSettings<SubscriptionLevelPart, SubscriptionLevelPartSettings>();
+
+            return 4;
         }
 
         #endregion

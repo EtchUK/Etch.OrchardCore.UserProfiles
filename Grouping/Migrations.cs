@@ -1,4 +1,6 @@
 ﻿using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
+using Etch.OrchardCore.UserProfiles.Grouping.Models;
+using Etch.OrchardCore.UserProfiles.Grouping.Settings;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Data.Migration;
@@ -50,8 +52,13 @@ namespace Etch.OrchardCore.UserProfiles.Grouping
         public int UpdateFrom1()
         {
             SchemaBuilder.CreateMapIndexTable(nameof(ProfileGroupPartIndex), table => { });
-
             return 2;
+        }
+
+        public int UpdateFrom2()
+        {
+            _contentDefinitionManager.MigratePartSettings<ProfileGroupPart, ProfileGroupPartSettings>();
+            return 3;
         }
 
         #endregion
