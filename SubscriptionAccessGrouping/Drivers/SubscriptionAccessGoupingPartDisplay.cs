@@ -37,7 +37,6 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 
         public override async Task<IDisplayResult> DisplayAsync(SubscriptionAccessPart part, BuildPartDisplayContext context)
         {
-
             var canViewContent = await _accessAuthorizationService.CanViewContent(_httpContextAccessor.HttpContext?.User, part.SubscriptionSelection);
 
             // If the request is not a detail page then we allow users to view the content

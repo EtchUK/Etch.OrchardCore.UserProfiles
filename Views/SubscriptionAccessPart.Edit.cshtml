@@ -2,10 +2,9 @@
 
 @model SubscriptionAccessPartViewModel
 
-<hr />
 <h5>@T["Subscription Access"] <span class="hint">@T["— If none selected the content would be available to everyone."]</span></h5>
-<fieldset class="form-group">
 
+<fieldset class="form-group">
     <div class="row">
         @for (var i = 0; i < Model.SubscriptionSelection.Length; i++) 
         {

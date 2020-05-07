@@ -9,10 +9,8 @@ using OrchardCore.DisplayManagement.Views;
 
 namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 {
-
     public class SubscriptionAccessPartDisplay : ContentPartDisplayDriver<SubscriptionAccessPart>
     {
-
         #region Dependencies
 
         private readonly ISubscriptionPartService _subscriptionPartService;
@@ -39,12 +37,12 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 
         public override async Task<IDisplayResult> EditAsync(SubscriptionAccessPart part, BuildPartEditorContext context)
         {
-            return Initialize<SubscriptionAccessPartViewModel>("SubscriptionAccessPart_Edit", async model => {
-                var subscriptions = await _subscriptionsService.GetAllAsync();
-                model.SubscriptionSelection = _subscriptionPartService.SelectedSubscriptionParts(subscriptions, part);
+            var subscriptions = await _subscriptionsService.GetAllAsync();
 
-                return;
-            });
+            return Initialize<SubscriptionAccessPartViewModel>("SubscriptionAccessPart_Edit", model => {
+                model.SubscriptionSelection = _subscriptionPartService.SelectedSubscriptionParts(subscriptions, part);
+            })
+            .Location("Parts#Subscription:5");
         }
 
         public async override Task<IDisplayResult> UpdateAsync(SubscriptionAccessPart part, IUpdateModel updater)
@@ -59,6 +57,5 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
         }
 
         #endregion
-
     }
 }
