@@ -24,7 +24,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping
             services.AddScoped<IPermissionProvider, Permissions>();
             services.AddScoped<ISubscriptionAccessSettingsService, SubscriptionAccessSettingsService>();
             services.AddScoped<IAccessAuthorizationService, AccessAuthorizationService>();
-            services.AddScoped<IContentPartDisplayDriver, SubscriptionAccessGoupingPartDisplay>();
+            services.AddScoped<IContentPartDisplayDriver, SubscriptionAccessGroupingPartDisplay>();
             services.AddScoped<ISubscriptionGroupsService, SubscriptionGroupsService>();
         }
     }
