@@ -52,7 +52,8 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Drivers
                 model.Items = query.OrderBy(x => x.DisplayText);
                 model.PartDefinition = context.TypePartDefinition;
                 model.Settings = GetSettings(part);
-            });
+            })
+            .Location("Parts#Profiles:5");
         }
 
         public override async Task<IDisplayResult> UpdateAsync(ProfileGroupPart part, IUpdateModel updater, UpdatePartEditorContext context)
