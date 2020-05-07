@@ -1,4 +1,5 @@
 ﻿using Etch.OrchardCore.UserProfiles.Grouping.Models;
+using Etch.OrchardCore.UserProfiles.Grouping.Settings;
 
 namespace Etch.OrchardCore.UserProfiles.Grouping.ViewModels
 {

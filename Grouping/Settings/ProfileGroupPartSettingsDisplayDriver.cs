@@ -36,14 +36,11 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Settings
                 return null;
             }
 
-            var model = new ProfileGroupPartSettingsViewModel();
+            var model = new ProfileGroupPartSettings();
 
-            await context.Updater.TryUpdateModelAsync(model, Prefix,
-                m => m.Hint,
-                m => m.Label);
-            
-            context.Builder.WithSetting(nameof(ProfileGroupPartSettings.Hint), model.Hint);
-            context.Builder.WithSetting(nameof(ProfileGroupPartSettings.Label), model.Label);
+            await context.Updater.TryUpdateModelAsync(model, Prefix, m => m.Hint, m => m.Label);
+
+            context.Builder.WithSettings(model);
 
             return Edit(contentTypePartDefinition, context.Updater);
         }

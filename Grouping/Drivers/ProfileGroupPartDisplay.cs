@@ -1,6 +1,7 @@
 ﻿using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
 using Etch.OrchardCore.UserProfiles.Grouping.Models;
 using Etch.OrchardCore.UserProfiles.Grouping.Services;
+using Etch.OrchardCore.UserProfiles.Grouping.Settings;
 using Etch.OrchardCore.UserProfiles.Grouping.ViewModels;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;

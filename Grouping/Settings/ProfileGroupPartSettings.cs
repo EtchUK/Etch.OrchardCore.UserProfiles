@@ -1,4 +1,4 @@
-﻿namespace Etch.OrchardCore.UserProfiles.Grouping.Models
+﻿namespace Etch.OrchardCore.UserProfiles.Grouping.Settings
 {
     public class ProfileGroupPartSettings
     {

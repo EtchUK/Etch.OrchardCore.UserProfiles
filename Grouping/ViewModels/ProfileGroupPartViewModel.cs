@@ -1,4 +1,5 @@
 ﻿using Etch.OrchardCore.UserProfiles.Grouping.Models;
+using Etch.OrchardCore.UserProfiles.Grouping.Settings;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OrchardCore.ContentFields.ViewModels;
 using OrchardCore.ContentManagement;
