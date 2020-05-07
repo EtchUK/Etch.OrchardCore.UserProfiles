@@ -10,7 +10,7 @@ using OrchardCore.DisplayManagement.Views;
 
 namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 {
-    public class SubscriptionAccessGoupingPartDisplay : ContentPartDisplayDriver<SubscriptionAccessPart>
+    public class SubscriptionAccessGroupingPartDisplay : ContentPartDisplayDriver<SubscriptionAccessPart>
     {
         #region Dependencies
 
@@ -23,7 +23,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 
         #region Constructor
 
-        public SubscriptionAccessGoupingPartDisplay(IAccessAuthorizationService accessAuthorizationService, IHttpContextAccessor httpContextAccessor, ISubscriptionAccessSettingsService subscriptionAccessSettingsService, IURLService urlService)
+        public SubscriptionAccessGroupingPartDisplay(IAccessAuthorizationService accessAuthorizationService, IHttpContextAccessor httpContextAccessor, ISubscriptionAccessSettingsService subscriptionAccessSettingsService, IURLService urlService)
         {
             _accessAuthorizationService = accessAuthorizationService;
             _httpContextAccessor = httpContextAccessor;
