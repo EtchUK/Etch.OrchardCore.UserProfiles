@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UKIE.OrchardCore.UserProfiles.SubscriptionAccessGrouping
+namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping
 {
     public class Permissions : IPermissionProvider
     {

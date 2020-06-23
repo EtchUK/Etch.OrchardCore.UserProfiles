@@ -16,19 +16,22 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions
     {
         public override void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IContentPartDisplayDriver, SubscriptionPartDisplay>();
-            services.AddScoped<IContentPartDisplayDriver, SubscriptionLevelPartDisplay>();
-            services.AddScoped<IContentPartDisplayDriver, SubscriptionAccessPartDisplay>();
+            services.AddContentPart<SubscriptionPart>()
+                .UseDisplayDriver<SubscriptionPartDisplay>();
+
+            services.AddContentPart<SubscriptionLevelPart>()
+                .UseDisplayDriver<SubscriptionLevelPartDisplay>();
+
+            services.AddContentPart<SubscriptionAccessPart>()
+                .UseDisplayDriver<SubscriptionAccessPartDisplay>();
+
             services.AddScoped<ISubscriptionsService, SubscriptionsService>();
             services.AddScoped<ISubscriptionPartService, SubscriptionPartService>();
             services.AddScoped<ISubscriptionLevelService, SubscriptionLevelService>();
+
             services.AddScoped<IDataMigration, Migrations>();
+
             services.AddScoped<IContentTypePartDefinitionDisplayDriver, SubscriptionLevelPartSettingsDriver>();
-
-            services.AddSingleton<ContentPart, SubscriptionPart>();
-            services.AddSingleton<ContentPart, SubscriptionLevelPart>();
-            services.AddSingleton<ContentPart, SubscriptionAccessPart>();
-
         }
     }
 }

@@ -6,7 +6,7 @@ using OrchardCore.Modules.Manifest;
     Category = "Users",
     Description = "Adds profiles for users",
     Name = "User Profiles",
-    Version = "0.2.3",
+    Version = "0.3.0",
     Website = "https://etchuk.com"
 )]
 
@@ -14,7 +14,8 @@ using OrchardCore.Modules.Manifest;
     Id = Constants.Features.Core,
     Name = "Profiles",
     Category = "Users",
-    Description = "Adds profiles for users."
+    Description = "Adds profiles for users.",
+    Dependencies = new string[] { Constants.Features.Grouping }
 )]
 
 [assembly: Feature(

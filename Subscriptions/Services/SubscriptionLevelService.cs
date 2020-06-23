@@ -30,7 +30,7 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Services
         {
             var contentTypeDefinition = _contentDefinitionManager.GetTypeDefinition(subscriptionLevelPart.ContentItem.ContentType);
             var contentTypePartDefinition = contentTypeDefinition.Parts.FirstOrDefault(x => string.Equals(x.PartDefinition.Name, nameof(SubscriptionLevelPart), StringComparison.Ordinal));
-            return contentTypePartDefinition.Settings.ToObject<SubscriptionLevelPartSettings>();
+            return contentTypePartDefinition.GetSettings<SubscriptionLevelPartSettings>();
         }
 
         #endregion

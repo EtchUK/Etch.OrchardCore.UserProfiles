@@ -12,7 +12,6 @@ namespace Etch.OrchardCore.UserProfiles.Handlers
 {
     public class ProfilePartHandler : ContentPartHandler<ProfilePart>
     {
-
         #region Dependencies
 
         private readonly IAuthorizationService _authorizationService;
@@ -55,6 +54,5 @@ namespace Etch.OrchardCore.UserProfiles.Handlers
         }
 
         #endregion
-
     }
 }

@@ -33,9 +33,9 @@ namespace Etch.OrchardCore.UserProfiles.GroupField
 
         public override void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ContentField, ProfileGroupField>();
+            services.AddContentField<ProfileGroupField>()
+                .UseDisplayDriver<ProfileGroupFieldDisplayDriver>();
 
-            services.AddScoped<IContentFieldDisplayDriver, ProfileGroupFieldDisplayDriver>();
             services.AddScoped<IContentPartFieldDefinitionDisplayDriver, ProfileGroupFieldSettingsDriver>();
 
             services.AddScoped<IContentPickerResultProvider, ProfileGroupPickerResultProvider>();

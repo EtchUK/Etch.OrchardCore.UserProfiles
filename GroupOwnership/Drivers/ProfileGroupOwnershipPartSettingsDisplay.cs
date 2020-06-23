@@ -24,9 +24,7 @@ namespace Etch.OrchardCore.UserProfiles.GroupOwnership.Drivers
 
             return Initialize<ProfileGroupOwnershipPartSettingsViewModel>("ProfileGroupOwnershipPartSettings_Edit", model =>
             {
-                var settings = contentTypePartDefinition.Settings.ToObject<ProfileGroupOwnershipPartSettings>();
-
-                model.RestrictAccess = settings.RestrictAccess;
+                model.RestrictAccess = contentTypePartDefinition.GetSettings<ProfileGroupOwnershipPartSettings>().RestrictAccess;
             }).Location("Content");
         }
 
@@ -39,10 +37,12 @@ namespace Etch.OrchardCore.UserProfiles.GroupOwnership.Drivers
 
             var model = new ProfileGroupOwnershipPartSettingsViewModel();
 
-            if (await context.Updater.TryUpdateModelAsync(model, Prefix, m => m.RestrictAccess))
+            await context.Updater.TryUpdateModelAsync(model, Prefix, m => m.RestrictAccess);
+
+            context.Builder.WithSettings(new ProfileGroupOwnershipPartSettings
             {
-                context.Builder.WithSetting(nameof(ProfileGroupOwnershipPartSettings.RestrictAccess), model.RestrictAccess.ToString());
-            }
+                RestrictAccess = model.RestrictAccess
+            });
 
             return Edit(contentTypePartDefinition, context.Updater);
         }

@@ -28,9 +28,9 @@ namespace Etch.OrchardCore.UserProfiles
         public override void ConfigureServices(IServiceCollection services)
         {
             // Profile Part
-            services.AddScoped<IContentPartDisplayDriver, ProfilePartDisplay>();
-            services.AddSingleton<ContentPart, ProfilePart>();
-            services.AddScoped<IContentPartHandler, ProfilePartHandler>();
+            services.AddContentPart<ProfilePart>()
+                .UseDisplayDriver<ProfilePartDisplay>()
+                .AddHandler<ProfilePartHandler>();
 
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IURLService, URLService>();

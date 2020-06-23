@@ -9,7 +9,6 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 {
     public class SubscriptionGroupPartDisplay : ContentPartDisplayDriver<SubscriptionGroupPart>
     {
-
         #region Overrides
 
         public override IDisplayResult Edit(SubscriptionGroupPart part)
@@ -17,8 +16,6 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
             return Initialize<SubscriptionGroupPartEditViewModel>("SubscriptionGroupPart_Edit", model =>
             {
                 model.Identifier = part.Identifier;
-
-                return Task.CompletedTask;
             });
         }
 

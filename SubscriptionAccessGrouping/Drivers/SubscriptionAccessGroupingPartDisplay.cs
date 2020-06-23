@@ -67,6 +67,5 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
         }
 
         #endregion
-
     }
 }

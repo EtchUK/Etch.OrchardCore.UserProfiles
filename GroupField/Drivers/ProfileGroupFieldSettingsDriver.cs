@@ -15,20 +15,20 @@ namespace Etch.OrchardCore.UserProfiles.GroupField.Drivers
 
         public override IDisplayResult Edit(ContentPartFieldDefinition partFieldDefinition)
         {
-            return Initialize<EditProfileGroupFieldSettingsViewModel>("ProfileGroupFieldSettings_Edit", model =>
+            return Initialize<ProfileGroupFieldSettings>("ProfileGroupFieldSettings_Edit", model =>
             {
-                partFieldDefinition.Settings.Populate(model);
+                partFieldDefinition.PopulateSettings<ProfileGroupFieldSettings>(model);
             })
             .Location("Content");
         }
 
         public override async Task<IDisplayResult> UpdateAsync(ContentPartFieldDefinition partFieldDefinition, UpdatePartFieldEditorContext context)
         {
-            var model = new EditProfileGroupFieldSettingsViewModel();
+            var model = new ProfileGroupFieldSettings();
 
             if (await context.Updater.TryUpdateModelAsync(model, Prefix))
             {
-                context.Builder.MergeSettings(model);
+                context.Builder.WithSettings(model);
             }
 
             return Edit(partFieldDefinition);

@@ -6,13 +6,9 @@
     <div class="col-md-8">
         <label asp-for="RestrictAccess">@T["Restrict access"]</label>
         <select asp-for="RestrictAccess" class="custom-select">
-            <option value="@RestrictAccess.None">@T["None"]</option>
-            <option value="@RestrictAccess.ForType">@T["Type"]</option>
-            <option value="@RestrictAccess.SetPerItem">@T["Item"]</option>
+            <option value="@RestrictAccess.None">@T["None - Never restrict access"]</option>
+            <option value="@RestrictAccess.ForType">@T["Type - Always restrict access for all items of this type that have a group owner"]</option>
+            <option value="@RestrictAccess.SetPerItem">@T["Content Item - Display option when editing to restrict access for content items of this type"]</option>
         </select>
-        <p class="hint">@T["Sets if the group ownership limits access to items:"]</p>
-        <p class="hint">@T["None - Never restrict access."]</p>
-        <p class="hint">@T["Type - Always restrict access for all items of this type that have a group owner."]</p>
-        <p class="hint">@T["Item - Display option when editing to restrict access for items of this type."]</p>
     </div>
 </div>
