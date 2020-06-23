@@ -8,8 +8,6 @@ using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Settings;
 
-using Permissions = UKIE.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Permissions;
-
 namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 {
     public class SubscriptionAccessSettingsDisplay : SectionDisplayDriver<ISite, SubscriptionAccessSettings>
@@ -47,7 +45,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
                 return null;
             }
 
-            return Initialize<SubscriptionAccessSettingsViewModel>("SubscriptionAccessSettings_Edit", async model =>
+            return Initialize<SubscriptionAccessSettingsViewModel>("SubscriptionAccessSettings_Edit", model =>
             {
                 model.UnauthorisedRedirectPath = settings.UnauthorisedRedirectPath;
 

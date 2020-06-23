@@ -7,7 +7,7 @@ using Etch.OrchardCore.UserProfiles.Profile;
 
 namespace Etch.OrchardCore.UserProfiles
 {
-    [Feature("Constants.Features.Core")]
+    [Feature(Constants.Features.Core)]
     public class AdminMenu : INavigationProvider
     {
         public AdminMenu(IStringLocalizer<AdminMenu> localizer)

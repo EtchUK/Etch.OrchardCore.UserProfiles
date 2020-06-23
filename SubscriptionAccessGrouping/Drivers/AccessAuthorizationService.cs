@@ -9,14 +9,14 @@ using Etch.OrchardCore.UserProfiles.Subscriptions.Models;
 using Etch.OrchardCore.UserProfiles.Subscriptions.Services;
 using Microsoft.AspNetCore.Authorization;
 using OrchardCore.ContentManagement;
+using OrchardCore.Contents;
 using OrchardCore.Users.Services;
-using Permissions = OrchardCore.Contents.Permissions;
+using Permissions = OrchardCore.Contents.CommonPermissions;
 
 namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
 {
     public class AccessAuthorizationService : IAccessAuthorizationService
     {
-
         #region Dependencies
 
         private readonly IAuthorizationService _authorizationService;
@@ -54,7 +54,7 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Drivers
             subscriptionAccessSelection = subscriptionAccessSelection.Where(x => x.IsSelected).ToArray();
 
             // If logged in user is an admin of CMS can view the content
-            if (await _authorizationService.AuthorizeAsync(userPrincipal, Permissions.EditContent)) {
+            if (await _authorizationService.AuthorizeAsync(userPrincipal, CommonPermissions.EditContent)) {
                 return true;
             }
 

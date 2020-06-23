@@ -24,12 +24,13 @@ namespace Etch.OrchardCore.UserProfiles.Grouping
             services.AddSingleton<IIndexProvider, ProfileGroupPartIndexProvider>();
             services.AddSingleton<IIndexProvider, ProfileGroupedPartIndexProvider>();
 
-            services.AddScoped<IContentPartDisplayDriver, ProfileGroupPartDisplay>();
+            services.AddContentPart<ProfileGroupPart>()
+                .UseDisplayDriver<ProfileGroupPartDisplay>();
+
+            services.AddContentPart<ProfileGroupedPart>();
+
             services.AddScoped<IContentTypePartDefinitionDisplayDriver, ProfileGroupPartSettingsDisplayDriver>();
             services.AddScoped<IProfileGroupsService, ProfileGroupsService>();
-
-            services.AddSingleton<ContentPart, ProfileGroupedPart>();
-            services.AddSingleton<ContentPart, ProfileGroupPart>();
 
             services.AddScoped<IContentPickerResultProvider, ProfilePickerResultProvider>();
 

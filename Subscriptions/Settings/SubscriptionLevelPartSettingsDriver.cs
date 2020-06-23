@@ -33,12 +33,11 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Settings
 
         public override async Task<IDisplayResult> UpdateAsync(ContentTypePartDefinition contentTypePartDefinition, UpdateTypePartEditorContext context)
         {
-            var model = new EditSubscriptionLevelPartSettingsViewModel();
+            var model = new SubscriptionLevelPartSettings();
 
             await context.Updater.TryUpdateModelAsync(model, Prefix, m => m.Hint, m => m.Multiple);
 
-            context.Builder.WithSetting(nameof(SubscriptionLevelPartSettings.Hint), model.Hint);
-            context.Builder.WithSetting(nameof(SubscriptionLevelPartSettings.Multiple), model.Multiple.ToString());
+            context.Builder.WithSettings(model);
 
             return Edit(contentTypePartDefinition, context.Updater);
         }

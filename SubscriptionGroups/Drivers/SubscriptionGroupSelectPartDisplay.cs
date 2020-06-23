@@ -38,8 +38,10 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
 
         public override async Task<IDisplayResult> EditAsync(SubscriptionGroupSelectPart part, BuildPartEditorContext context)
         {
-            return Initialize<SubscriptionGroupSelectPartViewModel>("SubscriptionGroupSelectPart_Edit", async model => {
-                model.SubscriptionGroups = await _subscriptionGroupsService.GetAllAsync();
+            var subscriptionGroups = await _subscriptionGroupsService.GetAllAsync();
+
+            return Initialize<SubscriptionGroupSelectPartViewModel>("SubscriptionGroupSelectPart_Edit", model => {
+                model.SubscriptionGroups = subscriptionGroups;
                 model.SubscriptionGroup = part.SubscriptionGroup;
                 return;
             });

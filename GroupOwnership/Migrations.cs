@@ -36,9 +36,10 @@ namespace Etch.OrchardCore.UserProfiles.GroupOwnership
                     .OfType(nameof(ProfileGroupField))
                     .WithDisplayName("Owned by group")
                     .WithDescription("Specifies which group owns the current content")
-                    .WithSetting("Hint", "Which group owns this content")
-                    .WithSetting("Required", "false")
-                    .WithSetting("DisplayMode", "Zero")
+                    .WithSettings(new ProfileGroupFieldSettings
+                    {
+                        Hint = "Which group owns this content."
+                    })
                 ));
 
             SchemaBuilder.CreateMapIndexTable(nameof(GroupOwnershipIndex), table => table

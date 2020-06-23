@@ -39,7 +39,7 @@ namespace Etch.OrchardCore.UserProfiles
 
         #region Migrations
 
-        public async Task<int> CreateAsync()
+        public int Create()
         {
             _contentDefinitionManager.AlterPartDefinition("ProfilePart", builder => builder
                 .WithDescription("Links content item to user.")

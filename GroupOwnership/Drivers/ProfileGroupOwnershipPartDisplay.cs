@@ -109,23 +109,28 @@ namespace Etch.OrchardCore.UserProfiles.GroupOwnership.Drivers
 
         private bool ShouldRestrictAccess(ProfileGroupOwnershipPart part, BuildPartDisplayContext context)
         {
-            var settings = context.TypePartDefinition.Settings.ToObject<ProfileGroupOwnershipPartSettings>();
+            var settings = context.TypePartDefinition.GetSettings<ProfileGroupOwnershipPartSettings>();
+
             if (settings == null)
             {
                 return false;
             }
+
             if (settings.RestrictAccess == RestrictAccess.None)
             {
                 return false;
             }
+
             if (settings.RestrictAccess == RestrictAccess.ForType)
             {
                 return true;
             }
+
             if (settings.RestrictAccess == RestrictAccess.SetPerItem)
             {
                 return part.RestrictAccess;
             }
+
             return false;
         }
 

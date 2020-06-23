@@ -13,6 +13,6 @@
     <span asp-validation-for="UserName"></span>
     @if (Model.Id != 0)
     {
-        <span class="hint">@T["Username of linked user."] <a href="@(Model.SiteURL == "/" ? Model.SiteURL : string.Format("{0}/", Model.SiteURL))OrchardCore.Users/Admin/Edit/@Model.Id">View User</a></span>
+        <span class="hint">@T["Username of linked user."] <a href="@(Model.SiteURL == "/" ? Model.SiteURL : string.Format("{0}/", Model.SiteURL))Admin/Users/Edit/@Model.Id">View User</a></span>
     }
 </fieldset>

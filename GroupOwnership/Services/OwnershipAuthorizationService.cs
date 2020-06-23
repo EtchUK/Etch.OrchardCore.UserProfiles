@@ -56,7 +56,7 @@ namespace Etch.OrchardCore.UserProfiles.GroupOwnership.Services
             }
 
             // If logged in user is an admin of CMS can view the content
-            if (await _authorizationService.AuthorizeAsync(userPrincipal, Permissions.EditContent))
+            if (await _authorizationService.AuthorizeAsync(userPrincipal, CommonPermissions.EditContent))
             {
                 return true;
             }

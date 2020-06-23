@@ -21,12 +21,12 @@ namespace Etch.OrchardCore.UserProfiles.GroupOwnership
 
             services.AddScoped<IDataMigration, Migrations>();
 
-            services.AddScoped<IContentPartDisplayDriver, ProfileGroupOwnershipPartDisplay>();
+            services.AddContentPart<ProfileGroupOwnershipPart>()
+                .UseDisplayDriver<ProfileGroupOwnershipPartDisplay>();
+
             services.AddScoped<IContentTypePartDefinitionDisplayDriver, ProfileGroupOwnershipPartSettingsDisplay>();
 
             services.AddScoped<IOwnershipAuthorizationService, OwnershipAuthorizationService>();
-
-            services.AddSingleton<ContentPart, ProfileGroupOwnershipPart>();
         }
     }
 }

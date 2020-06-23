@@ -17,8 +17,6 @@ namespace Etch.OrchardCore.UserProfiles.Subscriptions.Drivers
             return Initialize<SubscriptionPartEditViewModel>("SubscriptionPart_Edit", model =>
             {
                 model.Identifier = part.Identifier;
-
-                return Task.CompletedTask;
             });
         }
 
