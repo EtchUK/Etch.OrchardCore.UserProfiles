@@ -9,9 +9,6 @@ using OrchardCore.Navigation;
 using OrchardCore.Security.Permissions;
 using OrchardCore.Settings;
 
-using AdminMenu = UKIE.OrchardCore.UserProfiles.SubscriptionAccessGrouping.AdminMenu;
-using Permissions = UKIE.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Permissions;
-
 namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping
 {
     [Feature(Constants.Features.SubscriptionAccessGrouping)]
@@ -19,9 +16,9 @@ namespace Etch.OrchardCore.UserProfiles.SubscriptionAccessGrouping
     {
         public override void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<INavigationProvider, AdminMenu>();
+            services.AddScoped<INavigationProvider, UKIE.OrchardCore.UserProfiles.SubscriptionAccessGrouping.AdminMenu>();
             services.AddScoped<IDisplayDriver<ISite>, SubscriptionAccessSettingsDisplay>();
-            services.AddScoped<IPermissionProvider, Permissions>();
+            services.AddScoped<IPermissionProvider, UKIE.OrchardCore.UserProfiles.SubscriptionAccessGrouping.Permissions>();
             services.AddScoped<ISubscriptionAccessSettingsService, SubscriptionAccessSettingsService>();
             services.AddScoped<IAccessAuthorizationService, AccessAuthorizationService>();
             services.AddScoped<IContentPartDisplayDriver, SubscriptionAccessGroupingPartDisplay>();
