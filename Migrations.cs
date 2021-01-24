@@ -1,4 +1,4 @@
-﻿using Etch.OrchardCore.UserProfiles.Indexes;
+using Etch.OrchardCore.UserProfiles.Indexes;
 using Etch.OrchardCore.UserProfiles.Services;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
@@ -7,6 +7,7 @@ using OrchardCore.Users.Indexes;
 using OrchardCore.Users.Models;
 using System.Threading.Tasks;
 using YesSql;
+using YesSql.Sql;
 
 namespace Etch.OrchardCore.UserProfiles
 {
@@ -50,7 +51,7 @@ namespace Etch.OrchardCore.UserProfiles
                 .WithPart("ProfilePart")
             );
 
-            SchemaBuilder.CreateMapIndexTable(nameof(ProfilePartIndex), table => table
+            SchemaBuilder.CreateMapIndexTable<ProfilePartIndex>( table => table
                 .Column<string>("UserIdentifier", c => c.WithLength(UserIdenityMaxLength))
             );
 
@@ -58,10 +59,7 @@ namespace Etch.OrchardCore.UserProfiles
                 .CreateIndex("IDX_ProfilePartIndex_UserIdentifier", "UserIdentifier")
             );
 
-            /**
-             * Note:
-             * Caused an issue on initial orchard recipe setup so commented this out
-             */
+           
 
             // await CreateProfilesForExistingUsersAsync();
 
@@ -70,11 +68,11 @@ namespace Etch.OrchardCore.UserProfiles
 
         public int UpdateFrom1()
         {
-            SchemaBuilder.CreateMapIndexTable(nameof(ProfilePartIndex), table => table
+            SchemaBuilder.CreateMapIndexTable<ProfilePartIndex>( table => table
                 .Column<string>("UserIdentifier", c => c.WithLength(UserIdenityMaxLength))
             );
 
-            SchemaBuilder.AlterTable(nameof(ProfilePartIndex), table => table
+            SchemaBuilder.AlterIndexTable<ProfilePartIndex>( table => table
                 .CreateIndex("IDX_ProfilePartIndex_UserIdentifier", "UserIdentifier")
             );
 

@@ -1,9 +1,10 @@
-﻿using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
+using Etch.OrchardCore.UserProfiles.Grouping.Indexes;
 using Etch.OrchardCore.UserProfiles.Grouping.Models;
 using Etch.OrchardCore.UserProfiles.Grouping.Settings;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Data.Migration;
+using YesSql.Sql;
 
 namespace Etch.OrchardCore.UserProfiles.Grouping
 {
@@ -32,13 +33,13 @@ namespace Etch.OrchardCore.UserProfiles.Grouping
                 .Attachable()
                 .WithDescription("Add ability to group user profiles."));
 
-            SchemaBuilder.CreateMapIndexTable(nameof(ProfileGroupPartIndex), table => { });
+           SchemaBuilder.CreateMapIndexTable<ProfileGroupPartIndex>( table => { });
 
-            SchemaBuilder.CreateMapIndexTable(nameof(ProfileGroupedPartIndex), table => table
+            SchemaBuilder.CreateMapIndexTable<ProfileGroupedPartIndex>( table => table
                 .Column<string>("GroupContentItemId", c => c.WithLength(26))
             );
 
-            SchemaBuilder.AlterTable(nameof(ProfileGroupedPartIndex), table => table
+            SchemaBuilder.AlterIndexTable<ProfileGroupedPartIndex>( table => table
                 .CreateIndex("IDX_ProfileGroupedPartIndex_GroupContentItemId", "GroupContentItemId")
             );
 
@@ -51,7 +52,7 @@ namespace Etch.OrchardCore.UserProfiles.Grouping
 
         public int UpdateFrom1()
         {
-            SchemaBuilder.CreateMapIndexTable(nameof(ProfileGroupPartIndex), table => { });
+            SchemaBuilder.CreateMapIndexTable<ProfileGroupPartIndex>( table => { });
             return 2;
         }
 
