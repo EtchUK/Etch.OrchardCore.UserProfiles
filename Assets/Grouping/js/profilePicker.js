@@ -10,8 +10,8 @@
     window.VueMultiselect.default
   );
 
-  multiple = typeof(multiple) === 'undefined' ? true : multiple == true;
-  searchPath = searchPath || 'ProfilePicker';
+  multiple = typeof multiple === "undefined" ? true : multiple == true;
+  searchPath = searchPath || "ProfilePicker";
 
   new Vue({
     el: "#" + elementId,
@@ -19,19 +19,19 @@
     data: {
       value: null,
       arrayOfItems: selectedItems,
-      options: []
+      options: [],
     },
     computed: {
       selectedIds: function () {
         return this.arrayOfItems
           .map(function (x) {
-            return x.contentItemId;
+            return x.id;
           })
           .join(",");
       },
       isDisabled: function () {
         return false;
-      }
+      },
     },
     watch: {
       selectedIds: function () {
@@ -40,7 +40,7 @@
         setTimeout(function () {
           $(document).trigger("contentpreview:render");
         }, 100);
-      }
+      },
     },
     created: function () {
       var self = this;
@@ -50,7 +50,7 @@
       asyncFind: function (query) {
         var self = this;
         self.isLoading = true;
-        var searchUrl = tenantPath + '/' + searchPath;
+        var searchUrl = tenantPath + "/" + searchPath;
 
         if (query) {
           searchUrl += "?query=" + query;
@@ -82,7 +82,7 @@
       },
       remove: function (item) {
         this.arrayOfItems.splice(this.arrayOfItems.indexOf(item), 1);
-      }
-    }
+      },
+    },
   });
 };
