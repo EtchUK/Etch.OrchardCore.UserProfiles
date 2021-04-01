@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OrchardCore.ContentFields.ViewModels;
 using OrchardCore.ContentManagement;
 using OrchardCore.Modules;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace Etch.OrchardCore.UserProfiles.Controllers
                 ContentTypes = new List<string> { Constants.ContentTypeName }
             });
 
-            return new ObjectResult(results);
+            return new ObjectResult(results.Select(r => new VueMultiselectItemViewModel() { Id = r.ContentItemId, DisplayText = r.DisplayText, HasPublished = r.HasPublished }));
         }
     }
 }
