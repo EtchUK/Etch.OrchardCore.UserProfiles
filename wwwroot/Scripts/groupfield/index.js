@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("window.initializeProfileGroupPicker = function(\n    elementId,\n    selectedItems,\n    tenantPath,\n    multiple\n  ) {\n    window.initializeProfilePicker(elementId, selectedItems, tenantPath, multiple, 'ProfileGroupPicker');\n  };\n  \n\n//# sourceURL=webpack:///./Assets/GroupField/js/profileGroupPicker.js?");
+eval("window.initializeProfileGroupPicker = function(\r\n    elementId,\r\n    selectedItems,\r\n    tenantPath,\r\n    multiple\r\n  ) {\r\n    window.initializeProfilePicker(elementId, selectedItems, tenantPath, multiple, 'ProfileGroupPicker');\r\n  };\r\n  \n\n//# sourceURL=webpack:///./Assets/GroupField/js/profileGroupPicker.js?");
 
 /***/ })
 
