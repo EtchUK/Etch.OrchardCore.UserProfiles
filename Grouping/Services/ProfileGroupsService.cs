@@ -16,48 +16,39 @@ namespace Etch.OrchardCore.UserProfiles.Grouping.Services
     public class ProfileGroupsService : IProfileGroupsService {
 
         #region Dependencies
-        
+
+        private readonly IContentManager _contentManager;
         private readonly ISession _session;
-        private readonly IShellHost _shellHost;
-        private readonly ShellSettings _shellSettings;
 
         #endregion
 
         #region Constructor
 
-        public ProfileGroupsService(ISession session, IShellHost shellHost, ShellSettings shellSettings) {
+        public ProfileGroupsService(IContentManager contentManager, ISession session) 
+        {
+            _contentManager = contentManager;
             _session = session;
-            _shellHost = shellHost;
-            _shellSettings = shellSettings;
         }
 
         #endregion
 
         #region Implementation
 
-        public async Task<ContentItem> AssignGroupAsync(ContentItem profile, string groupContentItemId) {
-
+        public async Task<ContentItem> AssignGroupAsync(ContentItem profile, string groupContentItemId) 
+        {
             if (profile == null) {
                 return null;
             }
 
-            using (var scope = await _shellHost.GetScopeAsync(_shellSettings))
-            {
-                var contentManager = scope.ServiceProvider.GetRequiredService<IContentManager>();
+            profile.Alter<ProfileGroupedPart>(x => x.GroupContentItemId = groupContentItemId);
 
-                profile.Alter<ProfileGroupedPart>(x => x.GroupContentItemId = groupContentItemId);
+            profile.Apply(nameof(ProfileGroupedPart), profile.As<ProfileGroupedPart>());
+            ContentExtensions.Apply(profile, profile);
 
-                profile.Apply(nameof(ProfileGroupedPart), profile.As<ProfileGroupedPart>());
-                ContentExtensions.Apply(profile, profile);
+            await _contentManager.UpdateAsync(profile);
+            await _contentManager.PublishAsync(profile);
 
-                await contentManager.UpdateAsync(profile);
-                await contentManager.PublishAsync(profile);
-
-                await _session.CommitAsync();
-
-                return profile;
-            }
-
+            return profile;
         }
 
         public async Task<IList<ContentItem>> GetAllGroupsAsync() {
