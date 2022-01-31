@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Etch.OrchardCore.UserProfiles.Models;
 using Etch.OrchardCore.UserProfiles.Profile;
 using Etch.OrchardCore.UserProfiles.Services;
@@ -73,11 +75,22 @@ namespace Etch.OrchardCore.UserProfiles.Controllers
                     continue;
                 }
 
+                var errors = new Dictionary<string, string>();
+
                 user = await _userService.CreateUserAsync(new User { UserName = email, Email = email }, null, (key, message) =>
                 {
-                    _notifier.Error(TH[$"{message}"]);
-                    return;
+                    errors.Add(key, message);
                 }) as User;
+
+                if (errors.Any())
+                {
+                    foreach (var error in errors)
+                    {
+                        await _notifier.ErrorAsync(TH[$"{error.Value}"]);
+                    }
+
+                    continue;
+                }
 
                 await UpdateUserIdentifier(profile, user);
 
@@ -86,11 +99,11 @@ namespace Etch.OrchardCore.UserProfiles.Controllers
 
             if (count == 0)
             {
-                _notifier.Success(TH[$"All profiles have associated users."]);
+                await _notifier.SuccessAsync(TH[$"All profiles have associated users."]);
                 return RedirectToAction("Index");
             }
 
-            _notifier.Success(TH[$"{(count)} users successfully created."]);
+            await _notifier.SuccessAsync(TH[$"{(count)} users successfully created."]);
 
             return RedirectToAction("Index");
         }

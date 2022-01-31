@@ -19,12 +19,6 @@ namespace Etch.OrchardCore.UserProfiles
     [Feature(Constants.Features.Core)]
     public class Startup : StartupBase
     {
-
-        public Startup()
-        {
-            TemplateContext.GlobalMemberAccessStrategy.Register<SubscriptionAccessViewModel>();
-        }
-
         public override void ConfigureServices(IServiceCollection services)
         {
             // Profile Part
@@ -40,6 +34,10 @@ namespace Etch.OrchardCore.UserProfiles
             services.AddScoped<INavigationProvider, AdminMenu>();
             services.AddScoped<IDataMigration, Migrations>();
 
+            services.Configure<TemplateOptions>(o =>
+            {
+                o.MemberAccessStrategy.Register<SubscriptionAccessViewModel>();
+            });
         }
     }
 }

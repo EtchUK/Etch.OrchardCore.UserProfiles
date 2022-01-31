@@ -52,8 +52,8 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
 
             return Initialize<ProfilePartViewModel>("ProfilePart_Edit", model =>
             {
-                model.UserName = (user == null ? string.Empty : user.UserName);
-                model.Id = (user == null ? 0 : user.Id);
+                model.UserName = user?.UserName ?? string.Empty;
+                model.UserId = user?.UserId ?? string.Empty;
                 model.SiteURL = _urlService.GetTenantUrl();
             });
         }
@@ -67,11 +67,12 @@ namespace Etch.OrchardCore.UserProfiles.Drivers
                 return await EditAsync(part, context);
             }
 
-            var user = await _userService.GetUserAsync(model.UserName);
+            var userName = model.UserName.Replace("@", "+");
+            var user = await _userService.GetUserAsync(userName);
 
             if (user == null)
             {
-                user = await _userService.CreateUserAsync(new User { UserName = model.UserName, Email = model.UserName }, null, (key, message) =>
+                user = await _userService.CreateUserAsync(new User { UserName = userName, Email = model.UserName }, null, (key, message) =>
                 {
                     context.Updater.ModelState.AddModelError("UserName", $"{message}");
                 }) as User;

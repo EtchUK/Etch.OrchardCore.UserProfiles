@@ -16,11 +16,6 @@ namespace Etch.OrchardCore.UserProfiles.GroupField
     [Feature(Constants.Features.GroupField)]
     public class Startup : StartupBase
     {
-        public Startup()
-        {
-            TemplateContext.GlobalMemberAccessStrategy.Register<ProfileGroupField>();
-        }
-
         public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
             routes.MapAreaControllerRoute(
@@ -39,6 +34,11 @@ namespace Etch.OrchardCore.UserProfiles.GroupField
             services.AddScoped<IContentPartFieldDefinitionDisplayDriver, ProfileGroupFieldSettingsDriver>();
 
             services.AddScoped<IContentPickerResultProvider, ProfileGroupPickerResultProvider>();
+
+            services.Configure<TemplateOptions>(o =>
+            {
+                o.MemberAccessStrategy.Register<ProfileGroupField>();
+            });
         }
     }
 }
