@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.3.3-rc2</Version>
+    <Version>1.0.0</Version>
     <PackageId>Etch.OrchardCore.UserProfiles</PackageId>
     <Title>User Profiles</Title>
     <Authors>Etch UK</Authors>
@@ -14,14 +14,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-    <PackageReference Include="OrchardCore.ContentFields" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.ContentManagement" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.DisplayManagement" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.ResourceManagement" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.Module.Targets" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.Users" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.Users.Abstractions" Version="1.0.0-rc2-13450" />
+    <PackageReference Include="OrchardCore.ContentFields" Version="1.1.0" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="1.1.0" />
+    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.1.0" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="1.1.0" />
+    <PackageReference Include="OrchardCore.ResourceManagement" Version="1.1.0" />
+    <PackageReference Include="OrchardCore.Module.Targets" Version="1.1.0" />
+    <PackageReference Include="OrchardCore.Users" Version="1.1.0" />
+    <PackageReference Include="OrchardCore.Users.Abstractions" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>

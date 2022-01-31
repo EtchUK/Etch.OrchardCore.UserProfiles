@@ -1,5 +1,6 @@
 ﻿using Etch.OrchardCore.UserProfiles.Grouping.Models;
 using Microsoft.AspNetCore.Mvc;
+using OrchardCore.ContentFields.ViewModels;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Modules;
@@ -52,7 +53,7 @@ namespace Etch.OrchardCore.UserProfiles.GroupField.Controllers
                 ContentTypes = GetProfileGroupTypes()
             });
 
-            return new ObjectResult(results);
+            return new ObjectResult(results.Select(r => new VueMultiselectItemViewModel() { Id = r.ContentItemId, DisplayText = r.DisplayText, HasPublished = r.HasPublished }));
         }
 
         #endregion List

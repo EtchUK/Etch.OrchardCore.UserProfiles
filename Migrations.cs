@@ -7,6 +7,7 @@ using OrchardCore.Users.Indexes;
 using OrchardCore.Users.Models;
 using System.Threading.Tasks;
 using YesSql;
+using YesSql.Sql;
 
 namespace Etch.OrchardCore.UserProfiles
 {
@@ -50,7 +51,7 @@ namespace Etch.OrchardCore.UserProfiles
                 .WithPart("ProfilePart")
             );
 
-            SchemaBuilder.CreateMapIndexTable(nameof(ProfilePartIndex), table => table
+            SchemaBuilder.CreateMapIndexTable<ProfilePartIndex>(table => table
                 .Column<string>("UserIdentifier", c => c.WithLength(UserIdenityMaxLength))
             );
 
@@ -70,7 +71,7 @@ namespace Etch.OrchardCore.UserProfiles
 
         public int UpdateFrom1()
         {
-            SchemaBuilder.CreateMapIndexTable(nameof(ProfilePartIndex), table => table
+            SchemaBuilder.CreateMapIndexTable<ProfilePartIndex>(table => table
                 .Column<string>("UserIdentifier", c => c.WithLength(UserIdenityMaxLength))
             );
 

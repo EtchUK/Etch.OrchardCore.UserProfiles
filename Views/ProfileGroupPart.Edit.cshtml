@@ -19,10 +19,10 @@
 
     var label = settings.Label ?? "Profiles";
     var hint = settings.Hint;
-    
 }
 
 <script asp-src="~/Etch.OrchardCore.UserProfiles/Scripts/grouping/index.js" asp-name="profilePicker" at="Foot" depends-on="vuejs, vuemultiselect"></script>
+<script asp-src="~/Etch.OrchardCore.UserProfiles/Scripts/groupfield/index.js" asp-name="profileGroupPicker" at="Foot" depends-on="profilePicker"></script>
 <script asp-name="vue-multiselect-wrapper" asp-src="~/OrchardCore.ContentFields/Scripts/vue-multiselect-wrapper.js" at="Foot" depends-on="vuejs, vue-multiselect, sortable, vuedraggable"></script>
 <style asp-name="vue-multiselect-wrapper" asp-src="~/OrchardCore.ContentFields/Styles/vue-multiselect-wrapper.min.css" debug-src="~/OrchardCore.ContentFields/Styles/vue-multiselect-wrapper.css" depends-on="vue-multiselect"></style>
 

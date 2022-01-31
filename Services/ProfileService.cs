@@ -41,25 +41,26 @@ namespace Etch.OrchardCore.UserProfiles.Services
 
         public async Task<ContentItem> CreateAsync(IUser user)
         {
-            using (var scope = await _shellHost.GetScopeAsync(_shellSettings))
+            var shellScope = await _shellHost.GetScopeAsync(_shellSettings);
+            ContentItem contentItem = null;
+
+            await shellScope.UsingAsync(async scope =>
             {
                 var contentManager = scope.ServiceProvider.GetRequiredService<IContentManager>();
-                var contentItem = await contentManager.NewAsync(Constants.ContentTypeName);
+                contentItem = await contentManager.NewAsync(Constants.ContentTypeName);
+                contentItem.DisplayText = user.UserName;
 
                 var profile = contentItem.As<ProfilePart>();
                 profile.UserIdentifier = await _userManager.GetUserIdAsync(user);
-                profile.Apply();
-
-                contentItem.DisplayText = user.UserName;
-
                 contentItem.Apply(nameof(ProfilePart), profile);
+
                 ContentExtensions.Apply(contentItem, contentItem);
 
                 await contentManager.CreateAsync(contentItem);
                 await contentManager.PublishAsync(contentItem);
+            });
 
-                return contentItem;
-            }
+            return contentItem;
         }
 
         public async Task<ContentItem> GetAsync(IUser user)

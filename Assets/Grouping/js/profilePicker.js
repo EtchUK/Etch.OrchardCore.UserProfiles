@@ -10,7 +10,7 @@
         window.VueMultiselect.default
     );
 
-    multiple = typeof multiple === "undefined" ? true : multiple == true;
+    multiple = typeof multiple === "undefined" ? true : multiple === true;
     searchPath = searchPath || "ProfilePicker";
 
     new Vue({

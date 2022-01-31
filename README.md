@@ -6,10 +6,9 @@ Module for [Orchard Core](https://github.com/OrchardCMS/OrchardCore) that provid
 
 [![Build Status](https://secure.travis-ci.org/etchuk/Etch.OrchardCore.UserProfiles.png?branch=master)](http://travis-ci.org/etchuk/Etch.OrchardCore.UserProfiles) [![NuGet](https://img.shields.io/nuget/v/Etch.OrchardCore.UserProfiles.svg)](https://www.nuget.org/packages/Etch.OrchardCore.UserProfiles)
 
-
 ## Orchard Core Reference
 
-This module is referencing the RC2 build of Orchard Core ([`1.0.0-rc2-13450`](https://www.nuget.org/packages/OrchardCore.Module.Targets/1.0.0-rc2-13450)).
+This module is referencing a stable build of Orchard Core ([`1.1.0`](https://www.nuget.org/packages/OrchardCore.Module.Targets/1.1.0)).
 
 ## Installing
 
@@ -49,4 +48,3 @@ When enabled this feature will extend the subscriptions module to manage access 
 
 When enabled this feature will extend the subscriptions module to allow assign subscription to subscription group.
 This will then allow to add the groups to the user profile and limit the access to the content type by subscription group.
-
